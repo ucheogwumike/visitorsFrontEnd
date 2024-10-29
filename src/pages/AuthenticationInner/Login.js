@@ -64,7 +64,7 @@ const Login = () => {
                 <CardBody className="p-4">
                   <div className="text-center mt-2">
                     <h5 className="text-primary">Welcome Back !</h5>
-                    <p className="text-muted">Sign in to continue to Minible.</p>
+                    <p className="text-muted">Sign in to continue</p>
                   </div>
                   <div className="p-2 mt-4">
                   <Form className="form-horizontal"
@@ -120,12 +120,12 @@ const Login = () => {
                           className="form-check-input"
                           id="customControlInline"
                         />
-                        <label
+                        {/* <label
                           className="form-check-label"
                           htmlFor="customControlInline"
                         >
                           Remember me
-                          </label>
+                          </label> */}
                       </div>
 
                       <div className="mt-3 text-end">
@@ -137,7 +137,7 @@ const Login = () => {
                           </button>
                       </div>
 
-                      <div className="mt-4 text-center">
+                      {/* <div className="mt-4 text-center">
                         <h5 className="font-size-14 mb-3">Sign in with</h5>
 
                         <ul className="list-inline">
@@ -166,7 +166,7 @@ const Login = () => {
                             </Link>
                           </li>
                         </ul>
-                      </div>
+                      </div> */}
 
                       <div className="mt-4 text-center">
                         <p className="mb-0">Don&apos;t have an account ? <a href="/pages-register" className="fw-medium text-primary"> Signup now </a> </p>
@@ -179,8 +179,8 @@ const Login = () => {
 
               <div className="mt-5 text-center">
                 <p>
-                  © {new Date().getFullYear()} Minible. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger" /> by Themesbrand
+                  © {new Date().getFullYear()} {" "}
+                  <i className="mdi mdi-heart text-danger" /> 
                   </p>
               </div>
 

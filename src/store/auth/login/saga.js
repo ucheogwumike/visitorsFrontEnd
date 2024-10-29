@@ -51,7 +51,7 @@ function* loginUser({ payload: { user, history } }) {
     if (type !== 'admin'){
       history("/profile")
     }else{
-      history("/visitors")
+      history("/dashboard")
     }
     
   } catch (error) {

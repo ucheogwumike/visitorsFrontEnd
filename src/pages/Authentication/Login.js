@@ -30,7 +30,7 @@ import { facebook, google } from "../../config"
 
 const Login = (props) => {
 
-  document.title=" Login | Minible - Responsive Bootstrap 5 Admin Dashboard"
+  document.title=" Login"
 
   const dispatch = useDispatch();
 
@@ -184,12 +184,12 @@ const Login = (props) => {
                           className="form-check-input"
                           id="customControlInline"
                         />
-                        <label
+                        {/* <label
                           className="form-check-label"
                           htmlFor="customControlInline"
                         >
                           Remember me
-                        </label>
+                        </label> */}
                       </div>
 
                       <div className="mt-3">
@@ -201,7 +201,7 @@ const Login = (props) => {
                         </button>
                       </div>
 
-                      <div className="mt-4 text-center">
+                      {/* <div className="mt-4 text-center">
                         <h5 className="font-size-14 mb-3">Sign in with</h5>
 
                         <ul className="list-inline">
@@ -240,7 +240,7 @@ const Login = (props) => {
                           </li>
                           }
                         </ul>
-                      </div>
+                      </div> */}
 
                      
 
@@ -254,8 +254,8 @@ const Login = (props) => {
                 </CardBody>
               </Card>
               <div className="mt-5 text-center">
-                <p>© {new Date().getFullYear()} Minible. Crafted with <i
-                  className="mdi mdi-heart text-danger"></i> by Themesbrand
+                <p>© {new Date().getFullYear()}  <i
+                  className="mdi mdi-heart text-danger"></i> 
                         </p>
               </div>
             </Col>
