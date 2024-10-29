@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from "react"
-import { Table,Container,Form, FormGroup, Label, Input} from "reactstrap";
-import { findVisitors } from '../../helpers/api_helper';
+import { Table,Container,Form, FormGroup, Label, Input, Button} from "reactstrap";
+import { findVisitors, editVisitors } from '../../helpers/api_helper';
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -14,6 +14,8 @@ import logo from "../../assets/images/logo-dark.png"
 import logolight from "../../assets/images/logo-light.png"
 
 
+const user = JSON.parse(localStorage.getItem("user"));
+
 
 const ReceptionPage = props => {
 
@@ -22,9 +24,13 @@ const ReceptionPage = props => {
   
     const dispatch = useDispatch();
     const [vistData,setVisitData] = useState([]);
-    const [state, setState] = useState(true);
+    
     
   //  const visitors = async()=>{return await  findVisitors('/visitors')};
+
+    // const manage = async () =>{
+    //  await editVisitors().then(data => )
+    // }
 
     findVisitors('/visitors').then(data => setVisitData(data))
     // console.log(vistData)
@@ -36,20 +42,8 @@ const ReceptionPage = props => {
         document.body.className = "";
       };
     });
+
     
-    // const selectForgotPasswordState = (state) => state.ForgetPassword;
-    //   const ForgotPasswordProperties = createSelector(
-    //     selectForgotPasswordState,
-    //       (forgetPassword) => ({
-    //         forgetError: forgetPassword.forgetError,
-    //         forgetSuccessMsg: forgetPassword.forgetSuccessMsg,
-    //       })
-    //   );
-  
-    //   const {
-    //     forgetError,
-    //     forgetSuccessMsg
-    // } = useSelector(ForgotPasswordProperties);    
   
     return (
       <React.Fragment>
@@ -109,8 +103,8 @@ const ReceptionPage = props => {
       </td>
       <td>
         
-      <Label>
-        <Input
+      {/* <Label> */}
+        {/* <Input
           type="switch"
           checked={state}
           onClick={() => {
@@ -118,10 +112,12 @@ const ReceptionPage = props => {
           }}
         />
         <span>true</span>
-        <span>false</span>
-      </Label>
+        <span>false</span> */}
+      {/* </Label> */}
         
-      
+      <Button color='primary'>
+        change status
+      </Button>
       </td>
         </tr>
       )

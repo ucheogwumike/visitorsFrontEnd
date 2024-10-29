@@ -35,6 +35,12 @@ export async function findVisitors(url, config = {}) {
   return response.data;
 }
 
+export async function editVisitors(url, config = {}) {
+ 
+  const response =  await axiosApi2.patch(url, { ...config })//.then(response => response.data)
+  return response.data;
+}
+
 export async function CreateVisitor(url, config = {}) {
  
   const response =  await axiosApi2.post(url, { ...config })//.then(response => response.data)
