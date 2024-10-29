@@ -13,6 +13,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 import logo from "../../assets/images/firs_logo.png"
 import logolight from "../../assets/images/logo-light.png"
 
+const user = JSON.parse(localStorage.getItem("user"));
 
 
 const ReceptionPage = props => {
@@ -30,36 +31,13 @@ const ReceptionPage = props => {
     // console.log(vistData)
    
     useEffect(() => {
-    //   document.body.className = "authentication-bg";
-      // remove classname when component will unmount
+   
       return function cleanup() {
         document.body.className = "";
       };
     });
     
-    // const selectForgotPasswordState = (state) => state.ForgetPassword;
-    //   const ForgotPasswordProperties = createSelector(
-    //     selectForgotPasswordState,
-    //       (forgetPassword) => ({
-    //         forgetError: forgetPassword.forgetError,
-    //         forgetSuccessMsg: forgetPassword.forgetSuccessMsg,
-    //       })
-    //   );
-  
-    //   const {
-    //     forgetError,
-    //     forgetSuccessMsg
-    // } = useSelector(ForgotPasswordProperties);   
     
-    const user = {
-      firstName: 'John',
-      lastName: 'Doe',
-      companyName: 'Acme Corp',
-      phone: '+123456789',
-      email: 'john.doe@example.com',
-      profilePicture: 'https://via.placeholder.com/150',
-    };
-  
     return (
       <React.Fragment>
         <div className="page-content">
