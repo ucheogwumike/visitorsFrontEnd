@@ -136,7 +136,8 @@ const Login = (props) => {
                         return false;
                       }}
                     >
-                       {error ? <Alert color="danger">{error}</Alert> : null}
+                      {console.log(error)}
+                       {error?.response?.data?.message ? <Alert color="danger">{error.response.data.message}  {error.response.data.statusCode}</Alert> :<Alert color="danger">An error occured</Alert> }
 
                        <div className="mb-3">
                         <Label className="form-label">Email</Label>

@@ -31,6 +31,8 @@ function* loginUser({ payload: { user, history } }) {
         email: user.email,
         password: user.password,
       })
+
+      console.log(response);
       
       localStorage.setItem("authUser", JSON.stringify(response))
       localStorage.setItem("user", JSON.stringify(response.user))
@@ -51,6 +53,7 @@ function* loginUser({ payload: { user, history } }) {
     if (type !== 'admin'){
       history("/profile")
     }else{
+      console.log('problem')
       history("/dashboard")
     }
     
