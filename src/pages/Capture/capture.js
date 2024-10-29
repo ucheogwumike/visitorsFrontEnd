@@ -247,13 +247,13 @@ const CapturePage = props => {
                           placeholder="Enter lastname"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
-                          value={validation.values.MiddleName || ""}
+                          value={validation.values.middleName || ""}
                           invalid={
-                            validation.touched.MiddleName && validation.errors.MiddleName ? true : false
+                            validation.touched.middleName && validation.errors.middleName ? true : false
                           }
                         />
-                        {validation.touched.MiddleName && validation.errors.MiddleName ? (
-                          <FormFeedback type="invalid">{validation.errors.MiddleName}</FormFeedback>
+                        {validation.touched.middleName && validation.errors.middleName ? (
+                          <FormFeedback type="invalid">{validation.errors.middleName}</FormFeedback>
                         ) : null}
                       </div>  
 
@@ -312,23 +312,7 @@ const CapturePage = props => {
                         ) : null}
                       </div>
 
-                      <div className="mb-3">
-                      <Label className="form-label">Password</Label>
-                        <Input
-                          name="password"
-                          type="password"
-                          placeholder="Enter Password"
-                          onChange={validation.handleChange}
-                          onBlur={validation.handleBlur}
-                          value={validation.values.password || ""}
-                          invalid={
-                            validation.touched.password && validation.errors.password ? true : false
-                          }
-                        />
-                        {validation.touched.password && validation.errors.password ? (
-                          <FormFeedback type="invalid">{validation.errors.password}</FormFeedback>
-                        ) : null}
-                      </div>
+                     
                      
 
                       <div className="mt-3 text-end">
