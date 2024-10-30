@@ -49,7 +49,7 @@ const Visits = () => {
   const [passData, setPassData] = useState('');
 
 
-  const location = useLocation()
+  let location = useLocation()
   const imageurl = useRef()
 //   const { user } = location.state
 
@@ -63,7 +63,7 @@ const Visits = () => {
   const [flr, setFlr] = useState('')
   const [rom, setRom] = useState('')
   const [existVisit,setExistVisit] = useState(null)
-  const [vdate, setVdate] = useState('')
+  const [mail, setMail] = useState(false)
 
   
 
@@ -75,7 +75,17 @@ const Visits = () => {
        await setPassData(imgData);
        console.log(visit)
        console.log(visit.code)
-   return await CreateVisitor('/mail',{picture:visit.code, code:await imgData}).then(response => console.log(response))
+   return await CreateVisitor('/mail',{picture:visit.code, code:await imgData}).then(response => {
+    if(response == 'email successfully sent'){
+            setMail(true)
+            setExistVisit(null)
+            window.history.replaceState({}, '');
+            setTimeout(()=>{
+              window.location.reload()
+              // console.log(user)
+              // navigate("/visits",{state:response.data.visitor})
+            },3000)
+    }})
     //     const imgData = canvas.toDataURL('image/png');
     //     return imgData
     //     // console.log(imgData)
@@ -193,10 +203,10 @@ const Visits = () => {
 
   useEffect(() => {
     // Simulating API call or fetching dynamic data
-   
+  setExistVisit(null)
     findVisitors('/departments').then(data => setDepartmentData(data))
   
-    if(user.role.name === 'admin'){
+    if(user.role?.name === 'admin'){
       findVisitors(`visits`).then(data => {
         // console.log(data)
         setUserVisits(data)})
@@ -317,7 +327,9 @@ const Visits = () => {
                         Visit Created Successfully
                       </Alert>
                       
-                    ) :  null}
+                    ) :  mail && (<Alert color="success">
+                      Email sent successfully
+                    </Alert>)}
 
         {/* Role Select Field - Populating dynamically */}
         <FormGroup>
@@ -349,7 +361,7 @@ const Visits = () => {
             name="floor"
             id="floor"
             placeholder="Enter Floor Number"
-            value={formData.floor}
+            value={existVisit ? existVisit?.floor:formData.floor}
             onChange={handleChange}
           />
         </FormGroup>
@@ -362,7 +374,7 @@ const Visits = () => {
             name="room"
             id="room"
             placeholder="Enter Room number"
-            value={formData.room}
+            value={existVisit ? existVisit.room:formData.room}
             onChange={handleChange}
           />
         </FormGroup>
@@ -393,7 +405,7 @@ const Visits = () => {
                     
                    await exportAsImage(imageurl.current, "test")
                              
-                  }} type="submit" color="success" style={{"width":"25%",height:"100%",margin:"auto","textAlign":"center"}}>
+                  }} type="submit" color="success" style={{"width":"25%",height:"30%",margin:"auto","textAlign":"center"}}>
           send email
         </Button>
             )
