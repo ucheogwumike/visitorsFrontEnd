@@ -1,9 +1,10 @@
 import axios from "axios"
-import accessToken from "./jwt-token-access/accessToken"
+// import accessToken from "./jwt-token-access/accessToken"
 import { GET_VISITORS } from "./url_helper"
 
 //pass new generated access token here
-const token = accessToken
+const token =  JSON.parse(localStorage.getItem("authUser"));//localStorage.getItem("access_token",JSON.stringify(response.access_token))
+
 
 //apply base url for axios
 const API_URL = process.env.REACT_APP_API_URL 
@@ -18,12 +19,12 @@ const axiosApi2 = axios.create({
   baseURL: API_URL2,
 })
 console.log(API_URL,1)
-axiosApi.defaults.headers.common["Authorization"] = token
+axiosApi2.defaults.headers.common = {'Authorization':`Bearer ${token?.access_token}`}
 
-axiosApi.interceptors.response.use(
-  response => response,
-  error => Promise.reject(error)
-)
+// axiosApi2.interceptors.response.use(
+//   response => response,
+//   error => Promise.reject(error)
+// )
 
 export async function get(url, config = {}) {
   return await axiosApi.get(url, { ...config }).then(response => response.data)

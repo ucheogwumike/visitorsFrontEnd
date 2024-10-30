@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from "react"
-import { Table,Container,Form, FormGroup, Label, Input, Button} from "reactstrap";
+import { Table,Container,Form, FormGroup, Label, Input, Button,
+   Modal, ModalHeader, ModalBody, ModalFooter, Alert, UncontrolledAlert} from "reactstrap";
 import { findVisitors, editVisitors } from '../../helpers/api_helper';
 
 // Redux
@@ -19,18 +20,41 @@ const user = JSON.parse(localStorage.getItem("user"));
 
 const ReceptionPage = props => {
 
-    document.title=" Reception | Minible - Responsive Bootstrap 5 Admin Dashboard"
+    document.title=" Reception"
   
   
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
+    const [modal, setModal] = useState(false);
     const [vistData,setVisitData] = useState([]);
+    const [visitorItem,setVisitorItem] = useState(null);
+    const [success, setSuccess] = useState('')
+    const[visible, setVisible] = useState(true)
     
-    
+    const toggle = () => setModal(!modal);
+    const onDissmiss = () => setVisible(false);
+
+    const visitor = (item) =>{
+      setVisitorItem(item)
+    }
   //  const visitors = async()=>{return await  findVisitors('/visitors')};
 
-    // const manage = async () =>{
-    //  await editVisitors().then(data => )
-    // }
+    const block = async (email) =>{
+     await editVisitors('/visitors/block',{email}).then(data => {
+      if(data?.message){
+        window.scrollTo(0, 0);
+        setSuccess(data.message)
+      }
+     } )
+    }
+
+    const unblock = async (email) =>{
+      await editVisitors('/visitors/unblock',{email}).then(data => {
+        if(data?.message){
+          window.scrollTo(0, 0);
+          setSuccess(data.message)
+        }
+       } )
+     }
 
     findVisitors('/visitors').then(data => setVisitData(data))
     // console.log(vistData)
@@ -53,6 +77,7 @@ const ReceptionPage = props => {
           <Breadcrumbs title="FIRS" breadcrumbItem="VISITORS" />
           
         </Container>
+        {success && <Alert isOpen={visible} toggle={onDissmiss}>{success}</Alert>}
         <Table striped>
   <thead>
     <tr>
@@ -115,7 +140,10 @@ const ReceptionPage = props => {
         <span>false</span> */}
       {/* </Label> */}
         
-      <Button color='primary'>
+      <Button color='primary' onClick={()=>{
+        visitor(item)
+        toggle()
+        }}>
         change status
       </Button>
       </td>
@@ -177,7 +205,30 @@ const ReceptionPage = props => {
         </Table>
         </div>
       
-        
+        <Modal isOpen={modal} toggle={toggle}>
+        <ModalHeader className='bg-primary' toggle={toggle}>Edit Visitor</ModalHeader>
+        <ModalBody>
+          <h3 className='mb-3' style={{"textAlign":"center"}}> Set visitor's Status</h3>
+          
+          <p> first name: {visitorItem?.firstName} </p>
+          <p> last name : {visitorItem?.lastName} </p>
+          <p> phone     : {visitorItem?.phone} </p>
+          <p> company   : {visitorItem?.company} </p>
+          <p> email     : {visitorItem?.email} </p>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="danger" onClick={()=>{
+            block(visitorItem?.email)
+            toggle()}}>
+            Block Visitor
+          </Button>{' '}
+          <Button color="primary" onClick={()=>{
+            unblock(visitorItem?.email)
+            toggle()}}>
+            Restore Visitor
+          </Button>
+        </ModalFooter>
+      </Modal>
         
       </React.Fragment>
      

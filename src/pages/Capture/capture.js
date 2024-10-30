@@ -16,7 +16,7 @@ import  withRouter from "../../components/Common/withRouter"
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 
 import { registerUser, apiError } from "../../store/actions"
-import { CreateVisitor } from '../../helpers/api_helper';
+import { CreateVisitor,findVisitors } from '../../helpers/api_helper';
 
 import logo from "../../assets/images/firs_logo.png"
 import logolight from "../../assets/images/logo-light.png"
@@ -97,6 +97,40 @@ const CapturePage = props => {
       }
     });
 
+
+    const validation2 = useFormik({
+      // enableReinitialize : use this flag when initial values needs to be changed
+      enableReinitialize: true,
+  
+      initialValues: {
+        code: '',
+      },
+      validationSchema: Yup.object({
+        code: Yup.string().required("Please Enter visit code"),
+        
+        // password: Yup.string().required("Please Enter Your Password"),
+      }),
+      onSubmit: (values) => {
+        
+        findVisitors(`/visits/visitor?code=${values.code}`).then(response => {
+          if(!response.error){
+            // console.log(response)
+            // update picture
+            userObject = response.data
+            setUser(userObject)
+            
+            window.scrollTo(0,0)
+            setTimeout(()=>{
+              // console.log(user)
+              navigate("/visits",{state:response.data})
+            },3000)
+          }
+        })
+       
+        // dispatch(registerUser(values));
+      }
+    });
+
     // const relocate = () => {
     //   history("/visitors")
     // }
@@ -154,7 +188,7 @@ const CapturePage = props => {
                     <Webcam  ref={webCamRef} screenshotFormat="image/jpeg" videoConstraints={videoConstraints}/>
                   </div>) }
                   <div className="w-25  d-flex align-items-center mt-2" style={{"justifyContent":"center"}}>
-                    <button className='btn btn-primary w-sm waves-effect waves-light' onClick={capture}>Capture</button>
+                  {!imgSrc && (<button className='btn btn-primary w-sm waves-effect waves-light' onClick={capture}>Capture</button>)}  
                   </div>
 
 
@@ -332,19 +366,29 @@ const CapturePage = props => {
                       className="form-horizontal"
                       onSubmit={(e) => {
                         e.preventDefault();
-                        // validation.handleSubmit();
+                        validation2.handleSubmit();
                         return false;
                       }}
                     >
 
                       <div className="mb-3">
-                        <Label className="form-label">visit code</Label>
+                        <Label className="code">visit code</Label>
                           <Input
                             name="code"
                             type="text"
                             placeholder="Enter Visit Code"
+                            onChange={validation2.handleChange}
+                          onBlur={validation2.handleBlur}
+                          value={validation2.values.code || ""}
+                          invalid={
+                            validation.touched.code && validation.errors.code ? true : false
+                          }
+                        />
+                        {validation.touched.code && validation.errors.code ? (
+                          <FormFeedback type="invalid">{validation.errors.code}</FormFeedback>
+                        ) : null}
                             
-                          />
+                        
                           
                       </div>
 
@@ -365,11 +409,11 @@ const CapturePage = props => {
         <Modal isOpen={modal} toggle={toggle} >
         <ModalHeader toggle={toggle}>Select Visitor's Registration type</ModalHeader>
         <ModalBody className='d-flex justify-content-center'>
-        <Button color="primary" className='m-2' onClick={()=>{
+        {/* <Button color="primary" className='m-2' onClick={()=>{
           toggle()
           }}>
             Recapture
-          </Button>{' '}
+          </Button>{' '} */}
         <Button color="primary" className='m-2'  onClick={()=>{
           toggle()
           setFirst(true)

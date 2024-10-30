@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Container, Form, FormGroup, Label, Input, CardImg,
+import { Container, Form, FormGroup, Label, Input, CardImg,FormFeedback,
      Button,Card, CardBody, CardTitle, CardText, Row, Col, Alert } from 'reactstrap';
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 import { findVisitors } from '../../helpers/api_helper';
@@ -15,11 +15,7 @@ const user = JSON.parse(localStorage.getItem("user"));
 
 
 
-  const products = [
-    { id: 1, name: "Product 1", price: 29.99, image: "https://via.placeholder.com/150" },
-    { id: 2, name: "Product 2", price: 49.99, image: "https://via.placeholder.com/150" },
-    { id: 3, name: "Product 3", price: 19.99, image: "https://via.placeholder.com/150" },
-  ];
+ 
 
 const Visits = () => {
 
@@ -63,6 +59,11 @@ const Visits = () => {
   const [roles, setRoles] = useState([]);
   const [departmentData,setDepartmentData] = useState([]);
   const [userVisits,setUserVisits] = useState([]);
+  const [dept, setDepartment] = useState('')
+  const [flr, setFlr] = useState('')
+  const [rom, setRom] = useState('')
+  const [existVisit,setExistVisit] = useState(null)
+  const [vdate, setVdate] = useState('')
 
   
 
@@ -85,14 +86,37 @@ const Visits = () => {
     // download the image
     };
 
-    // const mail = async (passData)=>{
+    const validation2 = useFormik({
+      // enableReinitialize : use this flag when initial values needs to be changed
+      enableReinitialize: true,
+  
+      initialValues: {
+        code: '',
+      },
+      validationSchema: Yup.object({
+        code: Yup.string().required("Please Enter visit code"),
         
-    //     CreateVisitor('/mail',{code:visit.code, picture: passData}).then(response => console.log(response))
-           
-    // }
-
-  // Fetch or set roles dynamically (could be from an API or static array)
-   // Empty dependency array to run the effect once on component mount
+        // password: Yup.string().required("Please Enter Your Password"),
+      }),
+      onSubmit: (values) => {
+        
+        findVisitors(`/visits/one?code=${values.code}`).then(response => {
+          if(!response.error){
+            console.log(response)
+            // userObject = response.data
+            // setUser(userObject)
+            setExistVisit(response)
+            // window.scrollTo(0,0)
+            // setTimeout(()=>{
+            //   // console.log(user)
+            //   navigate("/visits",{state:response.data})
+            // },3000)
+          }
+        })
+       
+        // dispatch(registerUser(values));
+      }
+    });  
 
   const handleChange = (e) => {
     setFormData({
@@ -106,10 +130,16 @@ const Visits = () => {
     console.log('Form Data:', formData);
     let obj = {...formData,...location.state}
     obj.visitorEmail = obj.email 
-    obj.staffEmail = 'ucheogwumike@gmail.com'
+    obj.staffEmail = user.email
     obj.departmentName = obj.department
     obj.signIn = formData.signInTime;
     console.log(obj)
+    
+    // setVdate
+    setRom(formData.room)
+    setFlr(formData.floor)
+    setDepartment(obj.departmentName)
+
     CreateVisitor('/visits',obj).then(response => {
         if(!response.error){
             console.log(response)
@@ -197,11 +227,11 @@ const Visits = () => {
         {user.role?.name === 'admin' ? 
         <>
         <div  className="text-center0 d-flex justify-content-space-around p-2 bg-primary" style={{"width":'100%'}}>
-            <div id='problem' className="text-center0 d-flex justify-content-space-between p-2" style={{"width":'120%'}}>
-            <Card   className="text-center d-flex justify-content-center align-items-center " style={{"backgroundColor":"bisque","width":"37.5%"}}>
-            {/* Guest Profile Picture */}
+            <div id='problem' className="ml-5 text-center0 d-flex justify-content-space-between p-2" style={{"width":'50%'}}>
+            <Card   className="text-center d-flex justify-content-center align-items-center " style={{"backgroundColor":"bisque","width":"100%"}}>
+            {console.log(existVisit)}
             <img
-              src={location?.state?.profile_picture}
+              src={existVisit && existVisit ? existVisit.visitor[0].profile_picture:location?.state?.profile_picture}
               alt={`user name`}
               className="rounded-circle mt-3"
               width="150"
@@ -209,22 +239,22 @@ const Visits = () => {
               style={{ objectFit: 'cover' }}
             />
             <CardBody>
-              <CardTitle tag="h4">{location?.state?.firstName}  {location?.state?.lastName}</CardTitle>
+              <CardTitle tag="h4"> {existVisit && existVisit ? `${existVisit.visitor[0].firstName} ${existVisit.visitor[0].lastName} `: `${location?.state?.firstName}  ${location?.state?.lastName}`}</CardTitle>
               
               <CardText>
                 <strong>Company:</strong> {location?.state?.company}
               </CardText>
               <CardText>
-                <strong>Deparment:</strong> Taxation
+                <strong>Deparment:</strong> {dept}
               </CardText>
               <CardText>
-                <strong>Floor:</strong> 2nd Floor
+                <strong>Floor:</strong> {flr}
               </CardText>
               <CardText>
-                <strong>Room:</strong> 206
+                <strong>Room:</strong> {rom}
               </CardText>
               <CardText>
-                <strong>Visit Date:</strong> {}
+                <strong>Date:</strong> {new Date().getFullYear()}-{new Date().getMonth()+1}-{new Date().getDate()}
               </CardText>
             </CardBody>
           </Card>
@@ -233,11 +263,51 @@ const Visits = () => {
             "transform": "rotate(90deg)",
             "marginBottom":"auto",
             "marginTop":"auto",
-            "borderBottom":"4px solid black",
+            // "borderBottom":"4px solid black",
             "width":"20%",
             "transform-origin": "left top 0"}}>VISITOR</div>
             </div>
-          
+          {!location?.state && <div className='container w-50'>
+                      <Form
+                      className="form-horizontal"
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        validation2.handleSubmit();
+                        return false;
+                      }}
+                    >
+
+                      <div className="mb-3">
+                        <Label className="code">visit code</Label>
+                          <Input
+                            name="code"
+                            type="text"
+                            placeholder="Enter Visit Code"
+                            onChange={validation2.handleChange}
+                          onBlur={validation2.handleBlur}
+                          value={validation2.values.code || ""}
+                          invalid={
+                            validation2.touched.code && validation2.errors.code ? true : false
+                          }
+                        />
+                        {validation2.touched.code && validation2.errors.code ? (
+                          <FormFeedback type="invalid">{validation2.errors.code}</FormFeedback>
+                        ) : null}
+                            
+                        
+                          
+                      </div>
+
+                      <div className="mt-3 text-end">
+                        <button
+                          className="btn btn-secondary w-sm waves-effect waves-light w-100"
+                          type="submit"
+                        >
+                          find visit
+                        </button>
+                      </div>  
+                     </Form> 
+                    </div>}
         {
             !displayForm && !displayForm ? (
                 <Form onSubmit={handleSubmit} className='w-50 text-left'>
@@ -256,10 +326,10 @@ const Visits = () => {
             type="select"
             name="department"
             id="department"
-            value={formData.department}
+            value={existVisit ? existVisit.department[0].name:formData.department}
             onChange={handleChange}
           >
-            <option value="">Select Department</option>
+            <option value="">{existVisit ? existVisit.department[0].name:'select department'}</option>
             
             {/* Dynamically populate options */}
             {departmentData.map((department, index) => (
