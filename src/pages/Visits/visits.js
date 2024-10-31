@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Container, Form, FormGroup, Label, Input, CardImg,FormFeedback,
-     Button,Card, CardBody, CardTitle, CardText, Row, Col, Alert } from 'reactstrap';
+  Modal,ModalBody,ModalFooter,Button,Card, CardBody, CardTitle, CardText, Row, Col, Alert } from 'reactstrap';
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 import { findVisitors } from '../../helpers/api_helper';
 import { CreateVisitor } from '../../helpers/api_helper';
@@ -10,7 +10,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { set } from 'lodash';
 import logo from "../../assets/images/firs_logo.png"
-
+import VisitData from './visitProfile';
 const user = JSON.parse(localStorage.getItem("user"));
 // const [check, setCheck] = useState(JSON.parse(localStorage.getItem("user")))
 
@@ -48,7 +48,9 @@ const Visits = () => {
   const [visit, setVisit] = useState(visitObject);
   const [displayForm, setDisplayForm] = useState(false);
   const [passData, setPassData] = useState('');
-
+  const [modal, setModal] = useState(false);
+  const [editaData, setEditData] = useState(null)
+  const toggle = () => setModal(!modal);
 
   let location = useLocation()
   const imageurl = useRef()
@@ -240,7 +242,7 @@ const Visits = () => {
         <div  className="text-center0 d-flex justify-content-space-around p-2 bg-primary" style={{"width":'100%'}}>
             <div id='problem' className="ml-5 text-center0 d-flex justify-content-space-between p-2" style={{"width":'50%'}}>
             <Card   className="text-center d-flex justify-content-center align-items-center " style={{"backgroundColor":"bisque","width":"100%"}}>
-            {console.log(existVisit)}
+            
             <img
               src={existVisit && existVisit ? existVisit.visitor[0].profile_picture:location?.state?.profile_picture}
               alt={`user name`}
@@ -540,7 +542,11 @@ const Visits = () => {
                       <CardText>Visit Date : {users.dateOfVisit}</CardText>
                       <CardText>Visit Code: {users.code}</CardText>
                       <CardText>Visit status: {users.status}</CardText>
-                      <Button color="primary" className='w-100'>View Visit</Button>
+                      <Button color="primary" className='w-100' onClick={()=>{
+                        console.log(users)
+                        setEditData(users)
+                        toggle()
+                      }}>View Visit</Button>
                     </CardBody>
                   </Card>
                 </Col>
@@ -821,7 +827,25 @@ const Visits = () => {
       
    
     </Container>
-    </div>          
+    </div>    
+    <Modal isOpen={modal} toggle={toggle}>
+        {/* <ModalHeader className='bg-primary' toggle={toggle}>Edit Visitor</ModalHeader> */}
+        <ModalBody>
+          <h3 className='mb-3' style={{"textAlign":"center"}}> VISIT</h3>
+          
+          <VisitData data={editaData}/>
+        </ModalBody>
+        <ModalFooter>
+          
+          <Button style={{"margin":"auto"}}  color="primary" onClick={()=>{
+            
+            toggle()
+            //window.location.reload()
+            }}>
+            Continue
+          </Button>
+        </ModalFooter>
+      </Modal>   
     </React.Fragment>
   );
 };
