@@ -9,6 +9,7 @@ import html2canvas from 'html2canvas';
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { set } from 'lodash';
+import logo from "../../assets/images/firs_logo.png"
 
 const user = JSON.parse(localStorage.getItem("user"));
 // const [check, setCheck] = useState(JSON.parse(localStorage.getItem("user")))
@@ -212,7 +213,7 @@ const Visits = () => {
         setUserVisits(data)})
 
     }else{
-      findVisitors(`visits/visits?email=${user.email}&type=${user.role.name}`).then(data => {
+      findVisitors(`visits/visits?email=${user.email}&type=admin`).then(data => {
         console.log(data)
         setUserVisits(data)})
     }
@@ -277,47 +278,49 @@ const Visits = () => {
             "width":"20%",
             "transform-origin": "left top 0"}}>VISITOR</div>
             </div>
-          {!location?.state && <div className='container w-50'>
-                      <Form
-                      className="form-horizontal"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        validation2.handleSubmit();
-                        return false;
-                      }}
-                    >
+          {!location?.state && null
+          // <div className='container w-50'>
+          //             <Form
+          //             className="form-horizontal"
+          //             onSubmit={(e) => {
+          //               e.preventDefault();
+          //               validation2.handleSubmit();
+          //               return false;
+          //             }}
+          //           >
 
-                      <div className="mb-3">
-                        <Label className="code">visit code</Label>
-                          <Input
-                            name="code"
-                            type="text"
-                            placeholder="Enter Visit Code"
-                            onChange={validation2.handleChange}
-                          onBlur={validation2.handleBlur}
-                          value={validation2.values.code || ""}
-                          invalid={
-                            validation2.touched.code && validation2.errors.code ? true : false
-                          }
-                        />
-                        {validation2.touched.code && validation2.errors.code ? (
-                          <FormFeedback type="invalid">{validation2.errors.code}</FormFeedback>
-                        ) : null}
+          //             <div className="mb-3">
+          //               <Label className="code">visit code</Label>
+          //                 <Input
+          //                   name="code"
+          //                   type="text"
+          //                   placeholder="Enter Visit Code"
+          //                   onChange={validation2.handleChange}
+          //                 onBlur={validation2.handleBlur}
+          //                 value={validation2.values.code || ""}
+          //                 invalid={
+          //                   validation2.touched.code && validation2.errors.code ? true : false
+          //                 }
+          //               />
+          //               {validation2.touched.code && validation2.errors.code ? (
+          //                 <FormFeedback type="invalid">{validation2.errors.code}</FormFeedback>
+          //               ) : null}
                             
                         
                           
-                      </div>
+          //             </div>
 
-                      <div className="mt-3 text-end">
-                        <button
-                          className="btn btn-secondary w-sm waves-effect waves-light w-100"
-                          type="submit"
-                        >
-                          find visit
-                        </button>
-                      </div>  
-                     </Form> 
-                    </div>}
+          //             <div className="mt-3 text-end">
+          //               <button
+          //                 className="btn btn-secondary w-sm waves-effect waves-light w-100"
+          //                 type="submit"
+          //               >
+          //                 find visit
+          //               </button>
+          //             </div>  
+          //            </Form> 
+          //           </div>
+                    }
         {
             !displayForm && !displayForm ? (
                 <Form onSubmit={handleSubmit} className='w-50 text-left'>
@@ -416,9 +419,9 @@ const Visits = () => {
                 <Col className="mb-4">
                 
                 <div className='d-flex w-100 justify-content-center'>
-                    <div className='d-flex  justify-content-space-between' style={{flexDirection:'column', width:'40%', margin:'5px'}}>
-                      <p className='font-bold text-primary' style={{"fontSize":"20px",fontWeight:700}}>BOOK A VISIT</p>
-                        <div>
+                    {/* <div className='d-flex  justify-content-space-between' style={{flexDirection:'column', width:'40%', margin:'5px'}}> */}
+                      {/* <p className='font-bold text-primary' style={{"fontSize":"20px",fontWeight:700}}>BOOK A VISIT</p> */}
+                        {/* <div>
                         <Form onSubmit={onSubmit} className=' text-left'>
                           {visit && visit ? (
                               
@@ -480,8 +483,8 @@ const Visits = () => {
                                 Submit
                               </Button>
                           </Form>
-                        </div>
-                      </div>
+                        </div> */}
+                      {/* </div> */}
 
                       <div className='d-flex  justify-content-space-between' style={{flexDirection:'column', width:'40%', margin:'5px'}}>
                       <p className='font-bold text-primary' style={{"fontSize":"20px",fontWeight:700}}>FIND VISIT BY CODE</p>
@@ -531,7 +534,7 @@ const Visits = () => {
         
 
                   <Card style={{backgroundColor:users?.department[0].color}}>
-                    <CardImg width={'70px'} height={'70px'} top src={users?.picture} alt={users?.type} />
+                    <CardImg width={'70px'} height={'70px'} top src={logo} alt={users?.type} />
                     <CardBody>
                       <CardTitle tag="h5">{user.firstName} {user.lastName}</CardTitle>
                       <CardText>Visit Date : {users.dateOfVisit}</CardText>
@@ -549,8 +552,10 @@ const Visits = () => {
         </>
         
            
-        : user.role?.name === 'staff' ?  
-          <div>
+        : null }
+        
+        {/* user.role?.name === 'staff' ?  
+          {/* <div>
               <Row>
                 <Col className="mb-4">
                 
@@ -620,9 +625,9 @@ const Visits = () => {
                               </Button>
                           </Form>
                         </div>
-                      </div>
+                      </div> */}
 
-                      <div className='d-flex  justify-content-space-between' style={{flexDirection:'column', width:'40%', margin:'5px'}}>
+                      {/* <div className='d-flex  justify-content-space-between' style={{flexDirection:'column', width:'40%', margin:'5px'}}>
                       <p className='font-bold text-primary' style={{"fontSize":"20px",fontWeight:700}}>FIND VISIT BY CODE</p>
                         <div>
                         <Form onSubmit={onCodeSearch} className=' text-left'>
@@ -632,13 +637,13 @@ const Visits = () => {
                                 Visit Created Successfully
                               </Alert>
                               
-                            ) :  null}
+                            ) :  null} */}
 
                       
                             
 
                 
-                              <FormGroup>
+                              {/* <FormGroup>
                                 <Label for="code">Code</Label>
                                 <Input
                                   type="text"
@@ -655,35 +660,38 @@ const Visits = () => {
                               </Button>
                           </Form>
                         </div>
-                      </div>  
+                      </div>   */}
 
 
-                  </div> 
+                  {/* </div> 
 
                 </Col>
               </Row>
             
               <Row className='mt-4'>
                 {/* <>{console.log(userVisits)}</> */}
-                {userVisits.length ? userVisits.map((users) => (
-                <Col md="4" key={users.id} className="mb-4">
+                {
+                // userVisits.length ? userVisits.map((users) => (
+                // <Col md="4" key={users.id} className="mb-4">
         
 
-                  <Card style={{backgroundColor:users?.department[0].color}}>
-                    <CardImg width={'70px'} height={'70px'} top src={users?.picture} alt={users?.type} />
-                    <CardBody>
-                      <CardTitle tag="h5">{user.firstName} {user.lastName}</CardTitle>
-                      <CardText>Visit Date : {users.dateOfVisit}</CardText>
-                      <CardText>Visit Code: {users.code}</CardText>
-                      <CardText>Visit status: {users.status}</CardText>
-                      <Button color="primary" className='w-100'>View Visit</Button>
-                    </CardBody>
-                  </Card>
-                </Col>
-                  )):<div>
-                    BOOK A VISIT TO SEE VISITS
-                    </div>}
-              </Row>
+                //   <Card style={{backgroundColor:users?.department[0].color}}>
+                //     <CardImg width={'70px'} height={'70px'} top src={users?.picture} alt={users?.type} />
+                //     <CardBody>
+                //       <CardTitle tag="h5">{user.firstName} {user.lastName}</CardTitle>
+                //       <CardText>Visit Date : {users.dateOfVisit}</CardText>
+                //       <CardText>Visit Code: {users.code}</CardText>
+                //       <CardText>Visit status: {users.status}</CardText>
+                //       <Button color="primary" className='w-100'>View Visit</Button>
+                //     </CardBody>
+                //   </Card>
+                // </Col> 
+                
+                  // )):<div>
+                    // BOOK A VISIT TO SEE VISITS
+                    // </div>
+                    }
+              {/* </Row>
             </div> :
          <div>
           <Row>
@@ -788,26 +796,24 @@ const Visits = () => {
         
         <Row className='mt-4'>
           {/* <>{console.log(userVisits)}</> */}
-      {userVisits.length ? userVisits.map((users) => (
-        <Col md="4" key={users.id} className="mb-4">
-          <>{console.log(users?.department.color)}</>
-          <Card style={{backgroundColor:users?.department[0].color}}>
-            <CardImg width={'70px'} height={'70px'} top src={users?.picture} alt={users?.type} />
-            <CardBody>
-              <CardTitle tag="h5">{user.firstName} {user.lastName}</CardTitle>
-              <CardText>Visit Date : {users.dateOfVisit}</CardText>
-              <CardText>Visit Code: {users.code}</CardText>
-              <CardText>Visit status: {users.status}</CardText>
-              <Button color="primary" className='w-100'>View Visit</Button>
-            </CardBody>
-          </Card>
-        </Col>
-      )):<div>
-        BOOK A VISIT TO SEE VISITS
-        </div>}
-    </Row>
-
-        </div> }
+      {
+      // userVisits.length ? userVisits.map((users) => (
+      //   <Col md="4" key={users.id} className="mb-4">
+      //     <>{console.log(users?.department.color)}</>
+      //     <Card style={{backgroundColor:users?.department[0].color}}>
+      //       <CardImg width={'70px'} height={'70px'} top src={users?.picture} alt={users?.type} />
+      //       <CardBody>
+      //         <CardTitle tag="h5">{user.firstName} {user.lastName}</CardTitle>
+      //         <CardText>Visit Date : {users.dateOfVisit}</CardText>
+      //         <CardText>Visit Code: {users.code}</CardText>
+      //         <CardText>Visit status: {users.status}</CardText>
+      //         <Button color="primary" className='w-100'>View Visit</Button>
+      //       </CardBody>
+      //     </Card>
+      //   </Col>
+      // )):<div>
+      
+        }
         
 
        

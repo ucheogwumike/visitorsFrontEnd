@@ -246,7 +246,7 @@ const Login = (props) => {
                      
 
                       <div className="mt-4 text-center">
-                        <p className="mb-0">Don&apos;t have an account ? <a href="/register" className="fw-medium text-primary"> Signup now </a> </p>
+                        <p className="mb-0">Don&apos;t have an account ? <a href="/pre-register" className="fw-medium text-primary"> Book a visit </a> </p>
                       </div>
 
                     </Form>
