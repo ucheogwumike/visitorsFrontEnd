@@ -4,7 +4,7 @@ import { GET_VISITORS } from "./url_helper"
 
 //pass new generated access token here
 const token =  JSON.parse(localStorage.getItem("authUser"));//localStorage.getItem("access_token",JSON.stringify(response.access_token))
-
+console.log(token)
 
 //apply base url for axios
 const API_URL = process.env.REACT_APP_API_URL 

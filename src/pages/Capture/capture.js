@@ -88,7 +88,7 @@ const CapturePage = props => {
             window.scrollTo(0,0)
             setTimeout(()=>{
               // console.log(user)
-              navigate("/visits",{state:response.data.visitor})
+              navigate("/bookvisits",{state:response.data.visitor})
             },3000)
           }
         })

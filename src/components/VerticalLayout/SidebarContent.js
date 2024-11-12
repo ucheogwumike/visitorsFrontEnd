@@ -17,6 +17,7 @@ const SidebarContent = props => {
   const [check, setCheck] = useState(JSON.parse(localStorage.getItem("user")))
 
 //  setCheck(JSON.parse(localStorage.getItem("user")));
+  const [perm,setPerm] = useState(check.role.permissions)
 
   // const ref = useRef();
   const activateParentDropdown = useCallback((item) => {
@@ -124,12 +125,19 @@ const SidebarContent = props => {
   //   ref.current.recalculate();
   // }, []);
 
-  
+  const [extract, setExtract] = useState([])
   
   
   useEffect(() => {
     new MetisMenu("#side-menu");
-  }, [check]);
+    setExtract(()=>{
+      let answer = []
+      for (const permission of perm) {
+        answer.push(permission.name);
+      }
+      return answer
+    })
+  }, [check,perm]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -152,7 +160,7 @@ const SidebarContent = props => {
             <li className="menu-title">{props.t("Menu")} </li>
            
              <li>
-             {check.role.name === 'admin' ? <> 
+             {extract.includes('dashboard') ? <> 
               <Link to="/dashboard" className="waves-effect">
                 <i className="uil-home-alt"></i>
                 
@@ -171,17 +179,27 @@ const SidebarContent = props => {
             </li>
 
             <li>
-              <Link to="/visits" className="waves-effect">
+            {extract.includes('book-visits')  ? <> 
+              <Link to="/bookvisits" className="waves-effect">
               <i className="uil-book-alt"></i>
+                {/* <span className="badge rounded-pill bg-warning float-end"> {props.t("New")} </span> */}
+                <span>{props.t("Book Visits")}</span>
+              </Link>
+            </>:null}
+              
+            </li>
+
+            <li>
+              <Link to="/visits" className="waves-effect">
+              <i className="uil-list-ul"></i>
                 {/* <span className="badge rounded-pill bg-warning float-end"> {props.t("New")} </span> */}
                 <span>{props.t("Visits")}</span>
               </Link>
-            </li>
-
+            </li>  
           
 
             <li>
-            {check.role.name === 'admin' || check.role.name === 'staff' ? <> 
+            {extract.includes('visitors') ? <> 
               <Link to="/visitors" className="waves-effect">
               <i className="uil-list-ul"></i>
                 {/* <span className="badge rounded-pill bg-warning float-end"> {props.t("New")} </span> */}
@@ -191,11 +209,22 @@ const SidebarContent = props => {
             </li>
 
             <li>
-            {check.role.name === 'admin' ? <> 
+            {extract.includes('capture') ? <> 
               <Link to="/capture" className="waves-effect">
               <i className="uil-camera"></i>
                 {/* <span className="badge rounded-pill bg-warning float-end"> {props.t("New")} </span> */}
                 <span>{props.t("Capture")}</span>
+              </Link>
+              </>:null} 
+            </li>
+
+            <li>
+            
+            {extract.includes('settings') ? <> 
+              <Link to="/settings" className="waves-effect">
+              <i className="uil-cog"></i>
+                {/* <span className="badge rounded-pill bg-warning float-end"> {props.t("New")} </span> */}
+                <span>{props.t("Settings")}</span>
               </Link>
               </>:null} 
             </li>

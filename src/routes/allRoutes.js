@@ -31,6 +31,8 @@ import Visitors from "../pages/Home/ReceptionStaff"
 import Profile from "../pages/Profile/profile"
 import Capture from "../pages/Capture/capture"
 import Visits from "../pages/Visits/visits"
+import Settings from "../pages/Settings/settings"
+import BookVisits from "../pages/Visits/bookVisits"
 
 
 const userRoutes = [
@@ -42,6 +44,8 @@ const userRoutes = [
 
   { path:"/capture", component: <Capture/>},
   { path: "/visits", component: <Visits/>},
+  { path: "/bookvisits", component: <BookVisits/>},
+  { path: "/settings", component: <Settings/>},
   //Utility
   { path: "/pages-starter", component: <PagesStarter/> },
 

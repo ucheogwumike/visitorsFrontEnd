@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react"
 import { Table,Container,Form, FormGroup, Label, Input, Button,
    Modal, ModalHeader, ModalBody, ModalFooter, Alert, UncontrolledAlert} from "reactstrap";
 import { findVisitors, editVisitors } from '../../helpers/api_helper';
-
+import './ToggleSwitch.css';
+import CustomPagination from './CustomPagination';
+import VisitHistory from './VisitHistory';
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
@@ -29,17 +31,37 @@ const ReceptionPage = props => {
     const [visitorItem,setVisitorItem] = useState(null);
     const [success, setSuccess] = useState('')
     const[visible, setVisible] = useState(true)
+    const [isOn, setIsOn] = useState(false);
+    const [userVisits, setUserVisits] = useState([])
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+    const totalItems = 100;
+  
+    const onPageChange = (page) => {
+      setCurrentPage(page);
+      console.log(`Current Page: ${page}`);
+      findVisitors(`/visitors?page=${page}`).then(data => {
+        setVisitData(data)})
+      // Fetch new data based on the current page if necessary
+    };
     
     const toggle = () => setModal(!modal);
     const onDissmiss = () => setVisible(false);
 
-    const visitor = (item) =>{
-      setVisitorItem(item)
+
+
+    const visitor =  (item) =>{
+      findVisitors(`visits/visits?email=${item.email}&type=visitor`).then(data => {
+        console.log(data)
+        setUserVisits(data)
+        toggle()
+      })
     }
   //  const visitors = async()=>{return await  findVisitors('/visitors')};
 
     const block = async (email) =>{
-     await editVisitors('/visitors/block',{email}).then(data => {
+     return await editVisitors('/visitors/block',{email}).then(data => {
       if(data?.message){
         window.scrollTo(0, 0);
         setSuccess(data.message)
@@ -48,7 +70,7 @@ const ReceptionPage = props => {
     }
 
     const unblock = async (email) =>{
-      await editVisitors('/visitors/unblock',{email}).then(data => {
+      return await editVisitors('/visitors/unblock',{email}).then(data => {
         if(data?.message){
           window.scrollTo(0, 0);
           setSuccess(data.message)
@@ -56,16 +78,33 @@ const ReceptionPage = props => {
        } )
      }
 
-    findVisitors('/visitors').then(data => setVisitData(data))
+     const toggleButton = async (item) => {
+      if(item?.status) {
+        await block(item?.email)
+        setIsOn(!item?.status)
+      }else{
+        await unblock(item?.email)
+        setIsOn(!item?.status)
+      }
+      ;}
+
+      
+
+      // findVisitors('/visitors').then(data => {
+      //   console.log(data)
+      //   setVisitData(data)})
     // console.log(vistData)
    
     useEffect(() => {
     //   document.body.className = "authentication-bg";
       // remove classname when component will unmount
+      findVisitors('/visitors').then(data => {
+        console.log(data)
+        setVisitData(data)})
       return function cleanup() {
         document.body.className = "";
       };
-    });
+    },[]);
 
     
   
@@ -102,11 +141,15 @@ const ReceptionPage = props => {
       <th>
         Edit
       </th>
+      <th>
+        Visits
+      </th>
     </tr>
   </thead>
   <tbody>
     {vistData.length ? (
       vistData.map((item,id) => (
+       
         <tr>
         <th scope="row">
         {id+1}
@@ -124,28 +167,23 @@ const ReceptionPage = props => {
         {item.phone}
       </td>
       <td>
+     
         {item.status + ''}
       </td>
       <td>
-        
-      {/* <Label> */}
-        {/* <Input
-          type="switch"
-          checked={state}
-          onClick={() => {
-            setState(!state);
-          }}
-        />
-        <span>true</span>
-        <span>false</span> */}
-      {/* </Label> */}
-        
-      <Button color='primary' onClick={()=>{
+       <div className="toggle-switch" onClick={()=>toggleButton(item)}>
+      <div className={`slider ${item?.status ? 'on' : 'off'}`}>
+        {item.status ? 'block' : 'allow'}
+      </div>
+    </div>
+      </td>
+      <td>
+       <Button onClick={()=>{
         visitor(item)
-        toggle()
-        }}>
-        change status
-      </Button>
+       
+       }}>
+        ...
+       </Button>
       </td>
         </tr>
       )
@@ -203,29 +241,25 @@ const ReceptionPage = props => {
     </tr> */}
   </tbody>
         </Table>
+      
+        <CustomPagination 
+        totalItems={totalItems} 
+        itemsPerPage={itemsPerPage}
+        onPageChange={onPageChange}/>
         </div>
       
-        <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader className='bg-primary' toggle={toggle}>Edit Visitor</ModalHeader>
+        <Modal size='lg' isOpen={modal} toggle={toggle}>
+        <ModalHeader className='bg-primary' toggle={toggle}>Visits</ModalHeader>
         <ModalBody>
-          <h3 className='mb-3' style={{"textAlign":"center"}}> Set visitor's Status</h3>
+          <h3 className='mb-3' style={{"textAlign":"center"}}> Visitor's History</h3>
+          <VisitHistory data ={userVisits}/>
           
-          <p> first name: {visitorItem?.firstName} </p>
-          <p> last name : {visitorItem?.lastName} </p>
-          <p> phone     : {visitorItem?.phone} </p>
-          <p> company   : {visitorItem?.company} </p>
-          <p> email     : {visitorItem?.email} </p>
         </ModalBody>
         <ModalFooter>
-          <Button color="danger" onClick={()=>{
-            block(visitorItem?.email)
-            toggle()}}>
-            Block Visitor
-          </Button>{' '}
+         
           <Button color="primary" onClick={()=>{
-            unblock(visitorItem?.email)
             toggle()}}>
-            Restore Visitor
+            close
           </Button>
         </ModalFooter>
       </Modal>
