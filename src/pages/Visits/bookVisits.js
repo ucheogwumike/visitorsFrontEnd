@@ -153,10 +153,10 @@ const Visits = () => {
     setFlr(formData.floor)
     setDepartment(obj.departmentName)
 
-    CreateVisitor('/visits',obj).then(response => {
+    CreateVisitor('/visits',obj).then( async response => {
         if(!response.error){
             console.log(response)
-          visitObject = response.data.visit
+          visitObject = await response.data.visit
           setVisit(visitObject)
           
         //   window.scrollTo(0,0)
@@ -177,7 +177,7 @@ const Visits = () => {
     let obj = {...formData}
     obj.type = 'visitor'
     obj.visitorEmail = user.email
-    obj.status = 'pre-booked'
+    obj.status = 'ongoing'
     obj.departmentName = obj.department
     CreateVisitor('/visits',obj).then(response => {
       if(!response.error){
