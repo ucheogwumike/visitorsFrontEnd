@@ -280,7 +280,7 @@ const Visits = () => {
             "width":"20%",
             "transform-origin": "left top 0"}}>VISITOR</div>
             </div>
-          {!location?.state && 
+          {/* {!location?.state && 
           <div className='container w-50'>
                       <Form
                       className="form-horizontal"
@@ -322,7 +322,7 @@ const Visits = () => {
                       </div>  
                      </Form> 
                     </div>
-                    }
+                    } */}
         {
             !displayForm && !displayForm ? (
                 <Form onSubmit={handleSubmit} className='w-50 text-left'>
