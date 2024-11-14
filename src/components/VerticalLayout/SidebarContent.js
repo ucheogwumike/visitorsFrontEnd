@@ -178,16 +178,16 @@ const SidebarContent = props => {
               </Link>
             </li>
 
-            <li>
-            {extract.includes('book-visits')  ? <> 
-              <Link to="/bookvisits" className="waves-effect">
-              <i className="uil-book-alt"></i>
+            {/* <li> */}
+            {/* {extract.includes('book-visits')  ? <>  */}
+              {/* <Link to="/bookvisits" className="waves-effect"> */}
+              {/* <i className="uil-book-alt"></i> */}
                 {/* <span className="badge rounded-pill bg-warning float-end"> {props.t("New")} </span> */}
-                <span>{props.t("Book Visits")}</span>
-              </Link>
-            </>:null}
+                {/* <span>{props.t("Book Visits")}</span> */}
+              {/* </Link> */}
+            {/* </>:null} */}
               
-            </li>
+            {/* </li> */}
 
             <li>
               <Link to="/visits" className="waves-effect">

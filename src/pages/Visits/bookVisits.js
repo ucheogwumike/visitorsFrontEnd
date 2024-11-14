@@ -11,6 +11,8 @@ import { useFormik } from "formik";
 import { set } from 'lodash';
 import logo from "../../assets/images/firs_logo.png"
 import VisitData from './visitProfile';
+import {useNavigate} from "react-router-dom"
+
 const user = JSON.parse(localStorage.getItem("user"));
 // const [check, setCheck] = useState(JSON.parse(localStorage.getItem("user")))
 
@@ -35,6 +37,7 @@ const Visits = () => {
     
   });
 
+  const navigate = useNavigate();
   // const [formData, setFormData] = useState({
   //   floor: '',
   //   room: '',
@@ -86,7 +89,7 @@ const Visits = () => {
             setTimeout(()=>{
               window.location.reload()
               // console.log(user)
-              // navigate("/visits",{state:response.data.visitor})
+              navigate("/visits")
             },3000)
     }})
     //     const imgData = canvas.toDataURL('image/png');
@@ -149,15 +152,18 @@ const Visits = () => {
     console.log(obj)
     
     // setVdate
-    setRom(formData.room)
-    setFlr(formData.floor)
-    setDepartment(obj.departmentName)
+    // setRom(formData.room)
+    // setFlr(formData.floor)
+    // setDepartment(obj.departmentName)
 
     CreateVisitor('/visits',obj).then( async response => {
         if(!response.error){
             console.log(response)
           visitObject = await response.data.visit
           setVisit(visitObject)
+          setRom(visitObject.room)
+          setFlr(visitObject.department[0].floor)
+          setDepartment(visitObject.department[0].name)
           
         //   window.scrollTo(0,0)
           setTimeout(()=>{
@@ -241,7 +247,7 @@ const Visits = () => {
         <>
         <div  className="text-center0 d-flex justify-content-space-around p-2 bg-primary" style={{"width":'100%'}}>
             <div id='problem' className="ml-5 text-center0 d-flex justify-content-space-between p-2" style={{"width":'50%'}}>
-            <Card   className="text-center d-flex justify-content-center align-items-center " style={{"backgroundColor":"bisque","width":"100%"}}>
+            <Card   className="text-center d-flex justify-content-center align-items-center " style={{"backgroundColor":`${visit?.department[0]?.color}`,"width":"100%"}}>
             
             <img
               src={existVisit && existVisit ? existVisit.visitor[0].profile_picture:location?.state?.profile_picture}
@@ -359,7 +365,7 @@ const Visits = () => {
         </FormGroup>
 
         {/* Name Field */}
-        <FormGroup>
+        {/* <FormGroup>
           <Label for="floor">Floor</Label>
           <Input
             type="text"
@@ -369,7 +375,7 @@ const Visits = () => {
             value={existVisit ? existVisit?.floor:formData.floor}
             onChange={handleChange}
           />
-        </FormGroup>
+        </FormGroup> */}
 
         {/* Email Field */}
         <FormGroup>
