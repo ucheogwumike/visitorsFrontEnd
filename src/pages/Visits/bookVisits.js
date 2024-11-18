@@ -37,6 +37,16 @@ const Visits = () => {
     
   });
 
+  const captilize = (name) =>{
+    let splitStr = name.toLowerCase().split(' ');
+    for (var i = 0; i < splitStr.length; i++) {
+        
+        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+    }
+    // Directly return the joined string
+    return splitStr.join(' ');
+  }
+
   const navigate = useNavigate();
   // const [formData, setFormData] = useState({
   //   floor: '',
@@ -395,7 +405,7 @@ const Visits = () => {
             {departmentData.map((department, index) => (
                 
               <option key={index} value={department?.name}>
-                {department?.name}
+                {captilize(department?.name)}
               </option>
             ))}
           </Input>
