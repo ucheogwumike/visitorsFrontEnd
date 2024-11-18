@@ -29,8 +29,8 @@ const CustomPagination = ({ totalItems, itemsPerPage, onPageChange }) => {
       </PaginationItem>
 
       {Array.from({ length: totalPages }, (_, index) => (
-        <PaginationItem style={{"margin":"auto", backgroundColor:"#d63229", color:'white'}} active={index + 1 === currentPage} key={index}>
-          <PaginationLink style={{color:'black'}} onClick={() => handleClick(index + 1)}>
+        <PaginationItem  active={index + 1 === currentPage} key={index}>
+          <PaginationLink style={{"margin":"auto", backgroundColor:"#d63229", color:'white'}} onClick={() => handleClick(index + 1)}>
             {index + 1}
           </PaginationLink>
         </PaginationItem>
