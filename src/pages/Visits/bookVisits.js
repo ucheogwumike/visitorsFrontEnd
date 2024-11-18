@@ -169,7 +169,7 @@ const Visits = () => {
 
     if(location.state?.visit){
     
-      editVisitors('/visits',{signIn: formData.signInTime}).then( 
+      editVisitors('/visits',{signIn: formData.signInTime, code:location?.state?.visit.code }).then( 
         async response => {
          
           if(!response.error){
