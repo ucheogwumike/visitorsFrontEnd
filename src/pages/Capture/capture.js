@@ -16,7 +16,7 @@ import  withRouter from "../../components/Common/withRouter"
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 
 import { registerUser, apiError } from "../../store/actions"
-import { CreateVisitor,findVisitors } from '../../helpers/api_helper';
+import { CreateVisitor,findVisitors,editVisitors } from '../../helpers/api_helper';
 
 import logo from "../../assets/images/firs_logo.png"
 import logolight from "../../assets/images/logo-light.png"
@@ -44,7 +44,7 @@ const CapturePage = props => {
 
     const capture = useCallback(() => {
         const imageSrc = webCamRef.current.getScreenshot();
-        console.log(imageSrc)
+        
         setImgSrc(imageSrc);
         toggle()
     }, [webCamRef]);
@@ -87,7 +87,7 @@ const CapturePage = props => {
             
             window.scrollTo(0,0)
             setTimeout(()=>{
-              // console.log(user)
+           
               navigate("/bookvisits",{state:response.data.visitor})
             },3000)
           }
@@ -112,18 +112,34 @@ const CapturePage = props => {
       }),
       onSubmit: (values) => {
         
+
+
+        
         findVisitors(`/visits/visitor?code=${values.code}`).then(response => {
           if(!response.error){
-            // console.log(response)
+           
             // update picture
             userObject = response.data
             setUser(userObject)
-            
-            window.scrollTo(0,0)
+            editVisitors(`/visitors/profile`,{email:response.data.visitor.email,picture:imgSrc}).then(
+              response2 => {
+                if(!response2.error){
+                  
+                  response2.data.visit = response?.data?.visit
+                
+                  window.scrollTo(0,0)
             setTimeout(()=>{
-              // console.log(user)
-              navigate("/visits",{state:response.data})
+              
+              navigate("/bookvisits",{state:response2.data})
             },3000)
+                }
+
+              } 
+
+      
+            )
+            
+            
           }
         })
        
@@ -207,7 +223,7 @@ const CapturePage = props => {
                      {user && user ? (
                       
                         <Alert color="success">
-                          <>{console.log(user)}</>
+                          
                           Register User Successfully
                         </Alert>
                         

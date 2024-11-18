@@ -68,7 +68,7 @@ const Register = props => {
           // userObject = response.data.authUser
           // setUser(userObject)
 
-          console.log(response.data)
+         
           
           window.scrollTo(0,0)
           setTimeout(()=>{
@@ -149,7 +149,7 @@ const Register = props => {
                      {user && user ? (
                       
                         <Alert color="success">
-                          <>{console.log(user)}</>
+                        
                           Register User Successfully
                         </Alert>
                         

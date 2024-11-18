@@ -34,15 +34,15 @@ const ReceptionPage = props => {
     // console.log(vistData)
 
     const views = (val)=>{
-        console.log(val)
+        
         if(val === 'dept'){
             SetDepartment(true)
             SetRole(false)
-            console.log(department)
+            
         }else{
             SetDepartment(false)
             SetRole(true)
-            console.log(department)
+           
         }
 
     }
@@ -62,17 +62,17 @@ const ReceptionPage = props => {
           <Container fluid>
           <Breadcrumbs title="FIRS" breadcrumbItem="Settings" />
           <Row className='d-flex w-100'>
-            <div className='' style={{width:"20%",borderTop:"1px solid black",padding:"3px"}}>
+            <div className='' style={{width:"20%",marginTop:"20px"}}>
                 <ul className="waves-effect list-unstyled" style={{fontSize:'larger'}} >
                 <li className='mb-2' onClick={()=>{views('dept')}}>
                 <i className="uil-home-alt "></i>
                 
-                <span>Mange Departments</span>
+                <span>Departments</span>
                 </li>
                 <li className='mb-2' onClick={()=>{views('role')}}>
                 <i className="uil-home-alt"></i>
                 
-                <span>Mange Roles</span>
+                <span>Roles</span>
                 </li>
                 </ul>
             </div>

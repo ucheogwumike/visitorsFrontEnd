@@ -7,7 +7,7 @@ import { findVisitors } from '../../helpers/api_helper';
 
 const VisitHistory = (props) => {
 
-console.log(props.data)
+// console.log(props.data)
  return (
     <React.Fragment>
         <Container fluid>

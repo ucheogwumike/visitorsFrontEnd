@@ -4,7 +4,7 @@ import { Container, Form, FormGroup, Label, Input, CardImg,FormFeedback,
   Modal,ModalBody,ModalFooter,Button,Card, CardBody, CardTitle, CardText, Row, Col, Alert } from 'reactstrap';
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 import { findVisitors } from '../../helpers/api_helper';
-import { CreateVisitor } from '../../helpers/api_helper';
+import { CreateVisitor, editVisitors } from '../../helpers/api_helper';
 import html2canvas from 'html2canvas';
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -79,17 +79,18 @@ const Visits = () => {
      const imgData = await canvas.toDataURL('/image/png');
     //.then((canvas)=>{
        await setPassData(imgData);
-       console.log(visit)
-       console.log(visit.code)
+      //  console.log(visit)
+       
    return await CreateVisitor('/mail',{picture:visit.code, code:await imgData}).then(response => {
     if(response == 'email successfully sent'){
             setMail(true)
             setExistVisit(null)
             window.history.replaceState({}, '');
             setTimeout(()=>{
-              window.location.reload()
-              // console.log(user)
               navigate("/visits")
+              //window.location.reload()
+              // console.log(user)
+              
             },3000)
     }})
     //     const imgData = canvas.toDataURL('image/png');
@@ -118,7 +119,7 @@ const Visits = () => {
         
         findVisitors(`/visits/one?code=${values.code}`).then(response => {
           if(!response.error){
-            console.log(response)
+           
             // userObject = response.data
             // setUser(userObject)
             setExistVisit(response)
@@ -135,6 +136,16 @@ const Visits = () => {
     });  
 
   const handleChange = (e) => {
+    // console.log(e.target.name)
+    if(e.target.name === 'department')
+    for (const dept of departmentData) {
+      if(e.target.value === dept.name){
+          let obj = {}
+          obj.department = [dept]
+          setVisit(obj)
+      }
+    }
+    
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -143,22 +154,45 @@ const Visits = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
+    // console.log('Form Data:', formData);
     let obj = {...formData,...location.state}
     obj.visitorEmail = obj.email 
     obj.staffEmail = user.email
     obj.departmentName = obj.department
     obj.signIn = formData.signInTime;
-    console.log(obj)
+    
     
     // setVdate
     // setRom(formData.room)
     // setFlr(formData.floor)
     // setDepartment(obj.departmentName)
 
-    CreateVisitor('/visits',obj).then( async response => {
+    if(location.state?.visit){
+    
+      editVisitors('/visits',{signIn: formData.signInTime}).then( 
+        async response => {
+         
+          if(!response.error){
+             
+            visitObject = await location.state?.visit
+           
+            setVisit(visitObject)
+            setRom(visitObject.room)
+            setFlr(visitObject.department[0].floor)
+            setDepartment(visitObject.department[0].name)
+            
+          //   window.scrollTo(0,0)
+            setTimeout(()=>{
+              setDisplayForm(true)
+              // console.log(user)
+              // navigate("/visits",{state:response.data.visitor})
+            },3000
+      )}
+    })
+    }else{
+      CreateVisitor('/visits',obj).then( async response => {
         if(!response.error){
-            console.log(response)
+           
           visitObject = await response.data.visit
           setVisit(visitObject)
           setRom(visitObject.room)
@@ -173,6 +207,9 @@ const Visits = () => {
           },3000)
         }
       })
+    }
+
+    
     // You can handle form submission (e.g., send data to API)
   };
 
@@ -187,28 +224,28 @@ const Visits = () => {
     obj.departmentName = obj.department
     CreateVisitor('/visits',obj).then(response => {
       if(!response.error){
-        console.log(response)
+      
       }
     })
    
     
   }
 
-  const onCodeSearch = (e) => {
-    e.preventDefault();
+  // const onCodeSearch = (e) => {
+  //   e.preventDefault();
     
   
 
-    findVisitors(`/visits/one?code=${formData.code}`).then(response =>
-    {
-      if(!response.error){
-        console.log(response)
-      }
-    }
-    )
+  //   findVisitors(`/visits/one?code=${formData.code}`).then(response =>
+  //   {
+  //     if(!response.error){
+  //       console.log(response)
+  //     }
+  //   }
+  //   )
    
     
-  }
+  // }
 
   useEffect(() => {
     // Simulating API call or fetching dynamic data
@@ -217,12 +254,12 @@ const Visits = () => {
   
     if(user.role?.name === 'admin'){
       findVisitors(`visits`).then(data => {
-        // console.log(data)
+        
         setUserVisits(data)})
 
     }else{
       findVisitors(`visits/visits?email=${user.email}&type=admin`).then(data => {
-        console.log(data)
+       
         setUserVisits(data)})
     }
     
@@ -245,7 +282,7 @@ const Visits = () => {
         
         {user.role?.name === 'admin' ? 
         <>
-        <div  className="text-center0 d-flex justify-content-space-around p-2 bg-primary" style={{"width":'100%'}}>
+        <div  className="text-center0 d-flex justify-content-space-around p-2" style={{"width":'100%',backgroundColor:'#DCDCDC'}}>
             <div id='problem' className="ml-5 text-center0 d-flex justify-content-space-between p-2" style={{"width":'50%'}}>
             <Card   className="text-center d-flex justify-content-center align-items-center " style={{"backgroundColor":`${visit?.department[0]?.color}`,"width":"100%"}}>
             
@@ -331,7 +368,7 @@ const Visits = () => {
                     } */}
         {
             !displayForm && !displayForm ? (
-                <Form onSubmit={handleSubmit} className='w-50 text-left'>
+                <Form onSubmit={handleSubmit} className='w-50 text-left' style={{"marginTop":"8px"}}>
         {visit && visit ? (
                       
                       <Alert color="success">
@@ -352,7 +389,7 @@ const Visits = () => {
             value={existVisit ? existVisit.department[0].name:formData.department}
             onChange={handleChange}
           >
-            <option value="">{existVisit ? existVisit.department[0].name:'select department'}</option>
+            <option value="">{existVisit ? existVisit.department[0].name:'Select Department'}</option>
             
             {/* Dynamically populate options */}
             {departmentData.map((department, index) => (
@@ -384,7 +421,7 @@ const Visits = () => {
             type="text"
             name="room"
             id="room"
-            placeholder="Enter Room number"
+            placeholder="Enter Room Number"
             value={existVisit ? existVisit.room:formData.room}
             onChange={handleChange}
           />
@@ -407,7 +444,7 @@ const Visits = () => {
         
 
         {/* Submit Button */}
-        <Button type="submit"  className='w-100 text-bg-success'>
+        <Button type="submit"  className='w-100' style={{backgroundColor:"#e3242B"}}>
           Submit
         </Button>
       </Form>
@@ -416,7 +453,7 @@ const Visits = () => {
                     
                    await exportAsImage(imageurl.current, "test")
                              
-                  }} type="submit" color="success" style={{"width":"25%",height:"30%",margin:"auto","textAlign":"center"}}>
+                  }} type="submit"  style={{"width":"25%",height:"30%",margin:"auto","textAlign":"center",backgroundColor:"#e3242B"}}>
           send email
         </Button>
             )

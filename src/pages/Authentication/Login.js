@@ -136,7 +136,7 @@ const Login = (props) => {
                         return false;
                       }}
                     >
-                      {console.log(error)}
+                      
                        {error?.response?.data?.message && <Alert color="danger">{error.response.data.message}  {error.response.data.statusCode}</Alert>  }
 
                        <div className="mb-3">

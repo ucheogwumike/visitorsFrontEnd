@@ -7,16 +7,17 @@ import { findVisitors } from '../../helpers/api_helper';
 
 const VisitData = (props) => {
 
-console.log(props)
+
  return (
     <React.Fragment>
         <Container fluid>
-            <div  style={{textAlign:'center'}}>
+            <div className='d-flex flex-column' style={{textAlign:'center'}}>
+                <img src={props.data?.picture} alt='' width={'75%'} style={{margin:'auto'}}/>
                 <p>Code: {props.data.code}</p>
-                <p>Viist Date: {props.data.dateOfVisit}</p>
+                <p>Visit Date: {props.data.dateOfVisit.split('T')[0]}</p>
                 <p>Rescheduled: {props.data.rescheduled}</p>
-                <p>SignInTime: {props.data.signIn}</p>
-                <p>SignOutTime: {props.data.signOut}</p>
+                <p>Sign In Time: {props.data.signIn}</p>
+                <p>Sign Out Time: {props.data.signOut}</p>
                 <p>Status: {props.data.status}</p>
             </div>
         </Container>

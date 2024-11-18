@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from "react"
-import { Table,Container,Form, FormGroup, Label, Input, Button,
-   Modal, ModalHeader, ModalBody, ModalFooter, Alert, UncontrolledAlert} from "reactstrap";
+import { Table,Container,Form, FormGroup, Label, Input, Button,Col,Card,CardBody,CardText,
+   Modal, ModalHeader, ModalBody, ModalFooter, Alert,CardTitle, UncontrolledAlert} from "reactstrap";
 import { findVisitors, editVisitors } from '../../helpers/api_helper';
 import './ToggleSwitch.css';
 import CustomPagination from './CustomPagination';
 import VisitHistory from './VisitHistory';
+// import ReceptionPage from '../Profile/profile'
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
@@ -40,7 +41,7 @@ const ReceptionPage = props => {
   
     const onPageChange = (page) => {
       setCurrentPage(page);
-      console.log(`Current Page: ${page}`);
+      // .logconsole(`Current Page: ${page}`);
       findVisitors(`/visitors?page=${page}`).then(data => {
         setVisitData(data)})
       // Fetch new data based on the current page if necessary
@@ -52,8 +53,9 @@ const ReceptionPage = props => {
 
 
     const visitor =  (item) =>{
+      setVisitorItem(item)
       findVisitors(`visits/visits?email=${item.email}&type=visitor`).then(data => {
-        console.log(data)
+        // console.log(data)
         setUserVisits(data)
         toggle()
       })
@@ -99,7 +101,7 @@ const ReceptionPage = props => {
     //   document.body.className = "authentication-bg";
       // remove classname when component will unmount
       findVisitors('/visitors').then(data => {
-        console.log(data)
+        // console.log(data)
         setVisitData(data)})
       return function cleanup() {
         document.body.className = "";
@@ -248,16 +250,43 @@ const ReceptionPage = props => {
         onPageChange={onPageChange}/>
         </div>
       
-        <Modal size='lg' isOpen={modal} toggle={toggle}>
-        <ModalHeader className='bg-primary' toggle={toggle}>Visits</ModalHeader>
+        <Modal size='lg' isOpen={modal} toggle={toggle} fullscreen>
+        <ModalHeader style={{textAlign:'center'}} toggle={toggle}>Visits</ModalHeader>
         <ModalBody>
-          <h3 className='mb-3' style={{"textAlign":"center"}}> Visitor's History</h3>
+          
+          <Col md={{ size: 6, offset: 3 }}>
+          <Card>
+            <CardBody className="text-center">
+              {/* Profile Picture */}
+              <img
+                src={visitorItem?.profile_picture}
+                alt={`${visitorItem?.firstName} ${visitorItem?.lastName}`}
+                className="rounded-circle"
+                width="150"
+                height="150"
+              />
+              <CardTitle tag="h4" className="mt-3">
+                {visitorItem?.firstName} {visitorItem?.lastName}
+              </CardTitle>
+              <CardText>
+                <strong>Company:</strong> {visitorItem?.company}
+              </CardText>
+              <CardText>
+                <strong>Phone:</strong> {visitorItem?.phone}
+              </CardText>
+              <CardText>
+                <strong>Email:</strong> {visitorItem?.email}
+              </CardText>
+            </CardBody>
+          </Card>
+        </Col>
+        <h3 className='mb-3' style={{"textAlign":"center",marginTop:"4px"}}> Visitor's History</h3>
           <VisitHistory data ={userVisits}/>
           
         </ModalBody>
         <ModalFooter>
          
-          <Button color="primary" onClick={()=>{
+          <Button style={{backgroundColor:"#e3242B", color:'white'}} onClick={()=>{
             toggle()}}>
             close
           </Button>

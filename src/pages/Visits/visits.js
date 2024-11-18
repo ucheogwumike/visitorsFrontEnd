@@ -43,7 +43,7 @@ const Visits = () => {
 
   const onPageChange = (page) => {
     setCurrentPage(page);
-    console.log(`Current Page: ${page}`);
+    // console.log(`Current Page: ${page}`);
     findVisitors(`/visits?page=${page}`).then(data => {
       setUserVisits(data)})
     // Fetch new data based on the current page if necessary
@@ -81,7 +81,7 @@ const Visits = () => {
 
 
   const handleChange = (e) => {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -98,7 +98,7 @@ const Visits = () => {
     obj.departmentName = obj.department
     CreateVisitor('/visits',obj).then(response => {
       if(!response.error){
-        console.log(response)
+        // console.log(response)
       }
     })
    
@@ -145,14 +145,14 @@ const Visits = () => {
     }),
     onSubmit: async (values) => {
       values.status = true
-      console.log(values)
+      // console.log(values)
       // dispatch(registerUser(values));
         const {visitDate} = values
       await editVisitors('/visits/date',{date:visitDate,code:editaData.code}).then(response => {
         if(!response.error){
           // userObject = response.data.visitor
           // setUser(userObject)
-          console.log(response);
+          // console.log(response);
           findVisitors(`visits`).then(data => {
             // console.log(data)
             setUserVisits(data)})
@@ -187,11 +187,11 @@ const Visits = () => {
     e.preventDefault();
     
   
-    console.log(formData)
+    // console.log(formData)
     findVisitors(`/visits/one?code=${formData.code}`).then(response =>
-    {console.log(response)
+    {//console.log(response)
       if(!response.error){
-        console.log(response)
+        //console.log(response)
         setEditData(response)
         toggle()
       }
@@ -213,7 +213,7 @@ const Visits = () => {
 
     }else{
       findVisitors(`visits/visits?email=${user.email}&type=admin`).then(data => {
-        console.log(data)
+        //console.log(data)
         setUserVisits(data)})
     }
     
@@ -245,7 +245,7 @@ const Visits = () => {
      
 
                       <div className='d-flex  justify-content-space-between' style={{flexDirection:'column', width:'40%', margin:'5px'}}>
-                      <p className='font-bold text-primary' style={{"fontSize":"20px",fontWeight:700}}>FIND VISIT BY CODE</p>
+                      <p className='font-bold' style={{"fontSize":"20px",fontWeight:700, color:"#e3242B"}}>FIND VISIT BY CODE</p>
                         <div>
                         <Form onSubmit={onCodeSearch} className=' text-left'>
                           {visit && visit ? (
@@ -266,13 +266,13 @@ const Visits = () => {
                                   type="text"
                                   name="code"
                                   id="code"
-                                  placeholder="enter visit code"
+                                  placeholder="Enter Visit Code"
                                   value={formData.code}
                                   onChange={handleChange}
                                 />
                               </FormGroup>
 
-                              <Button type="submit" color="primary" className='w-100'>
+                              <Button type="submit" style={{backgroundColor:"#e3242B", color:'white'}} className='w-100'>
                                 Submit
                               </Button>
                           </Form>
@@ -285,7 +285,7 @@ const Visits = () => {
                 </Col>
               </Row>
             
-              <Row className='mt-4 bg-primary p-4'>
+              <Row className='mt-4 style={{backgroundColor:"#e3242B", }} p-4'>
                 {/* <>{console.log(userVisits)}</> */}
                 <Table striped>
                   <thead>
@@ -327,7 +327,7 @@ const Visits = () => {
                     {userVisits.length ? userVisits.map((users,id) => (
                       
                       <tr>
-                        {console.log(users)}
+                        {/* {console.log(users)} */}
                           <th scope="row">
                             {id+1}
                           </th> 
@@ -338,7 +338,7 @@ const Visits = () => {
                           {users.code}
                           </td>
                           <td>
-                            {users.dateOfVisit}
+                            {users.dateOfVisit.split('T')[0]}
                           </td>
                           <td>
                             {users.signIn}
@@ -353,15 +353,15 @@ const Visits = () => {
                             {users?.department[0]?.name}
                           </td>
                           <td>
-                            <Button color="primary" className='w-100' onClick={()=>{
-                        console.log(users)
+                            <Button  style={{backgroundColor:"#e3242B", color:'white'}}  className='w-100' onClick={()=>{
+                        // console.log(users)
                         setEditData(users)
                         toggle()
                       }}>...</Button>
                           </td>
                           <td>
                             <Button onClick={()=>{
-                        console.log(users)
+                        // console.log(users)
                         setEditData(users)
                         toggle2()
                       }}>
@@ -404,7 +404,7 @@ const Visits = () => {
         <ModalFooter className='d-flex align-items-center justify-content-center'>
 
           {!editaData?.signIn && <Button onClick={()=>{
-              console.log(editaData)
+              // console.log(editaData)
               updateVisit({signIn: new Date().toTimeString().split(' ')[0]})
           }}>
               Sign In
@@ -419,15 +419,15 @@ const Visits = () => {
             Continue
           </Button>
 
-          {editaData?.status === 'pre-booked'  && <Button color="danger" onClick={()=>{
+          {/* {editaData?.status === 'pre-booked'  && <Button color="danger" onClick={()=>{
               console.log(editaData)
               updateVisit({status: 'cancelled'})
           }}>
               Cancel
-            </Button>}
+            </Button>} */}
 
             {(editaData?.status === 'ongoing' || editaData?.status === 'pre-booked')  && <Button color="danger" onClick={()=>{
-              console.log(editaData)
+              // console.log(editaData)
               updateVisit({signOut: new Date().toTimeString().split(' ')[0],status: 'completed' })
           }}>
               Sign Out
@@ -446,7 +446,7 @@ const Visits = () => {
           <Card>
                 <CardBody className="p-4">
                   <div className="text-center mt-2">
-                    <h5 className="text-primary">Select Date</h5>
+                    <h5 className="text">Select Date</h5>
                     {/* <p className="text-muted">Get </p> */}
                   </div>
                   <div className="p-2 mt-4">
@@ -497,8 +497,15 @@ const Visits = () => {
                       
 
                         <button
-                          className="btn btn-primary w-sm waves-effect waves-light w-100"
+                          className="btn  w-sm waves-effect waves-light w-100"
+                          style={{backgroundColor:"#e3242B", color:'white'}}
                           type="submit"
+                          onClick={()=>{
+            
+            
+                            toggle2()
+                            //window.location.reload()
+                            }}
                         >
                           Reschedule
                         </button>
@@ -514,7 +521,7 @@ const Visits = () => {
           
           
         </ModalBody>
-        <ModalFooter className='d-flex align-items-center justify-content-center'>
+        {/* <ModalFooter className='d-flex align-items-center justify-content-center'>
 
           
           
@@ -530,7 +537,7 @@ const Visits = () => {
           
 
             
-        </ModalFooter>
+        </ModalFooter> */}
       </Modal> 
     </React.Fragment>
   );

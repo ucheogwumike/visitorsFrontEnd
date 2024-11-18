@@ -32,7 +32,7 @@ const Roles = (props) => {
     // };
     const toggle2 = () => setModal2(!modal2);
     const handleChange = (e) => {
-        console.log(e.target.value)
+        
         setFormData({
           ...formData,
           [e.target.name]: e.target.value
@@ -40,8 +40,7 @@ const Roles = (props) => {
       };
 
       const handleChangeCheckBox = (e) => {
-        console.log(1)
-        console.log(e)
+        
         const { name, checked } = e.target;
         setCheckData({
           ...checkData,
@@ -53,11 +52,11 @@ const Roles = (props) => {
         e.preventDefault();
         
       
-        console.log(formData)
+        
         CreateVisitor(`/roles`,formData).then(response =>
-        {console.log(response)
+        {
           if(!response.error){
-            console.log(response)
+            
             
           }
         }
@@ -83,14 +82,14 @@ const Roles = (props) => {
     //     return checkData[key]});
     // //const arr = Object.keys(checkData).filter((check)=>checkData[check] === true);
     // console.log("Selected Options:", selectedOptions);
-    console.log(arr)
+    
     
       
         // console.log(checkData)
         editVisitors(`/roles/add?name=${roleName}`,{permissions:arr}).then(response =>
-        {console.log(response)
+        {
           if(!response.error){
-            console.log(response)
+            // console.log(response)
             
           }
         }
@@ -103,7 +102,7 @@ const Roles = (props) => {
         findVisitors(`/roles/one?name=${name}`).then(data => {
             let solution = []
             for (const dat of data.permissions) {
-                console.log(dat)
+               
                 solution.push(dat?.name)
             }
             
@@ -133,10 +132,58 @@ const Roles = (props) => {
 
  return (
     <React.Fragment>
-        <Container fluid className=''>
-        <Row className='w-50' style={{margin:'auto'}}>
+        <Container fluid className='d-flex justify-content-space-between  w-100'>
+        <Row className='w-75 mt-0'>
+                        <Row className='w-100 p-4'>
+                {/* <>{console.log(userVisits)}</> */}
+                <Table className='w-100' striped>
+                  <thead>
+                    <tr>
+                    <th>
+                      #
+                    </th>
+                    <th>
+                      Role Name
+                    </th>
+                    <th>
+                      Edit
+                    </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {departmentData.length ? departmentData.map((department,id) => (
+                      
+                      <tr>
+                        {/* {console.log(department)} */}
+                          <th scope="row">
+                            {id+1}
+                          </th> 
+                          <td>
+                           {department?.name} 
+                          </td>
+                          <td>
+                            <Button style={{backgroundColor:"#e3242B", color:'white'}} className='w-50' onClick={()=>{
+                        setRoleName(department?.name)
+                        newPerm(department?.name)
+                        toggle2()
+                      }}>Manage permissions</Button>
+                          </td>
+                          
+                      </tr>
+                    )):<div>
+                    No Roles Found
+                    </div>}
+                  </tbody>
+              
+                </Table>
+      
+
+              </Row>
+
+                        </Row>
+        <Row style={{width:"35%",marginLeft:'30px', marginTop:'20px'}}>
                         <Form onSubmit={onCodeSearch} className=' text-left p-2'>
-                            <h3 style={{margin:'auto',textAlign:"center"}}>CREATE Roles</h3>
+                            <h4 style={{margin:'auto',textAlign:"center"}}>CREATE</h4>
                           {department && department ? (
                               
                               <Alert color="success">
@@ -166,59 +213,12 @@ const Roles = (props) => {
 
                               
 
-                              <Button type="submit" color="primary" className='w-100'>
+                              <Button type="submit" style={{backgroundColor:"#e3242B", color:'white'}} className='w-100'>
                                 Submit
                               </Button>
                           </Form>
                         </Row>
-                        <Row>
-                        <Row className='mt-4 w-100 p-4'>
-                {/* <>{console.log(userVisits)}</> */}
-                <Table striped>
-                  <thead>
-                    <tr>
-                    <th>
-                      #
-                    </th>
-                    <th>
-                      Role Name
-                    </th>
-                    <th>
-                      Edit
-                    </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {departmentData.length ? departmentData.map((department,id) => (
-                      
-                      <tr>
-                        {/* {console.log(department)} */}
-                          <th scope="row">
-                            {id+1}
-                          </th> 
-                          <td>
-                           {department?.name} 
-                          </td>
-                          <td>
-                            <Button color="primary" className='w-50' onClick={()=>{
-                        setRoleName(department?.name)
-                        newPerm(department?.name)
-                        toggle2()
-                      }}>Manage permissions</Button>
-                          </td>
-                          
-                      </tr>
-                    )):<div>
-                    No Roles Found
-                    </div>}
-                  </tbody>
-              
-                </Table>
-      
-
-              </Row>
-
-                        </Row>
+                        
         </Container>
         <Modal isOpen={modal2} toggle={toggle2}>
         {/* <ModalHeader className='bg-primary' toggle={toggle}>Edit Visitor</ModalHeader> */}
@@ -260,7 +260,7 @@ const Roles = (props) => {
 
                 
                               
-                              <Button type="submit" color="primary" className='w-100'>
+                              <Button type="submit" style={{backgroundColor:"#e3242B", color:'white'}} className='w-100'>
                                 APPLY
                               </Button>
                           </Form>
@@ -270,7 +270,7 @@ const Roles = (props) => {
 
           
           
-          <Button   color="primary" onClick={()=>{
+          <Button  style={{backgroundColor:"#e3242B", color:'white'}} onClick={()=>{
             
             
             toggle2()
