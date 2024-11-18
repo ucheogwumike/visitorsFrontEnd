@@ -351,7 +351,7 @@ const PreRegister = props => {
 
                         <button
                           className="btn  w-sm waves-effect waves-light w-100"
-                          style={{backgroundColor:"#e3242B", color:'white'}}
+                          style={{backgroundColor:"#d63229", color:'white'}}
                           type="submit"
                         >
                           Register
@@ -382,7 +382,7 @@ const PreRegister = props => {
         </ModalBody>
         <ModalFooter>
           
-          <Button style={{"margin":"auto", backgroundColor:"#e3242B", color:'white'}} onClick={()=>{
+          <Button style={{"margin":"auto", backgroundColor:"#d63229", color:'white'}} onClick={()=>{
             
             toggle()
             window.location.reload()}}>

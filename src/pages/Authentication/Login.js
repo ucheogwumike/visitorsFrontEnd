@@ -196,7 +196,7 @@ const Login = (props) => {
                       <div className="mt-3">
                         <button
                           className="btn btn w-100 waves-effect waves-light"
-                          style={{backgroundColor:"#e3242B", color:'white'}}
+                          style={{backgroundColor:"#d63229", color:'white'}}
                           type="submit"
                         >
                           Log In

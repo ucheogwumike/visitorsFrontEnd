@@ -245,7 +245,7 @@ const Visits = () => {
      
 
                       <div className='d-flex  justify-content-space-between' style={{flexDirection:'column', width:'40%', margin:'5px'}}>
-                      <p className='font-bold' style={{"fontSize":"20px",fontWeight:700, color:"#e3242B"}}>FIND VISIT BY CODE</p>
+                      <p className='font-bold' style={{"fontSize":"20px",fontWeight:700, color:"#d63229"}}>FIND VISIT BY CODE</p>
                         <div>
                         <Form onSubmit={onCodeSearch} className=' text-left'>
                           {visit && visit ? (
@@ -272,7 +272,7 @@ const Visits = () => {
                                 />
                               </FormGroup>
 
-                              <Button type="submit" style={{backgroundColor:"#e3242B", color:'white'}} className='w-100'>
+                              <Button type="submit" style={{backgroundColor:"#d63229", color:'white'}} className='w-100'>
                                 Submit
                               </Button>
                           </Form>
@@ -285,7 +285,7 @@ const Visits = () => {
                 </Col>
               </Row>
             
-              <Row className='mt-4 style={{backgroundColor:"#e3242B", }} p-4'>
+              <Row className='mt-4 style={{backgroundColor:"#d63229", }} p-4'>
                 {/* <>{console.log(userVisits)}</> */}
                 <Table striped>
                   <thead>
@@ -353,7 +353,7 @@ const Visits = () => {
                             {users?.department[0]?.name}
                           </td>
                           <td>
-                            <Button  style={{backgroundColor:"#e3242B", color:'white'}}  className='w-100' onClick={()=>{
+                            <Button  style={{backgroundColor:"#d63229", color:'white'}}  className='w-100' onClick={()=>{
                         // console.log(users)
                         setEditData(users)
                         toggle()
@@ -498,7 +498,7 @@ const Visits = () => {
 
                         <button
                           className="btn  w-sm waves-effect waves-light w-100"
-                          style={{backgroundColor:"#e3242B", color:'white'}}
+                          style={{backgroundColor:"#d63229", color:'white'}}
                           type="submit"
                           onClick={()=>{
             

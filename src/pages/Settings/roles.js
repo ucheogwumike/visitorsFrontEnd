@@ -162,7 +162,7 @@ const Roles = (props) => {
                            {department?.name} 
                           </td>
                           <td>
-                            <Button style={{backgroundColor:"#e3242B", color:'white'}} className='w-50' onClick={()=>{
+                            <Button style={{backgroundColor:"#d63229", color:'white'}} className='w-50' onClick={()=>{
                         setRoleName(department?.name)
                         newPerm(department?.name)
                         toggle2()
@@ -213,7 +213,7 @@ const Roles = (props) => {
 
                               
 
-                              <Button type="submit" style={{backgroundColor:"#e3242B", color:'white'}} className='w-100'>
+                              <Button type="submit" style={{backgroundColor:"#d63229", color:'white'}} className='w-100'>
                                 Submit
                               </Button>
                           </Form>
@@ -260,7 +260,7 @@ const Roles = (props) => {
 
                 
                               
-                              <Button type="submit" style={{backgroundColor:"#e3242B", color:'white'}} className='w-100'>
+                              <Button type="submit" style={{backgroundColor:"#d63229", color:'white'}} className='w-100'>
                                 APPLY
                               </Button>
                           </Form>
@@ -270,7 +270,7 @@ const Roles = (props) => {
 
           
           
-          <Button  style={{backgroundColor:"#e3242B", color:'white'}} onClick={()=>{
+          <Button  style={{backgroundColor:"#d63229", color:'white'}} onClick={()=>{
             
             
             toggle2()
