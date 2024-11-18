@@ -168,7 +168,7 @@ const PreRegister = props => {
               <Card>
                 <CardBody className="p-4">
                   <div className="text-center mt-2">
-                    <h5 className="text-primary">Pre Register A Visit</h5>
+                    <h5 className="text">Pre Register A Visit</h5>
                     {/* <p className="text-muted">Get </p> */}
                   </div>
                   <div className="p-2 mt-4">
@@ -350,7 +350,8 @@ const PreRegister = props => {
                       </div>
 
                         <button
-                          className="btn btn-primary w-sm waves-effect waves-light w-100"
+                          className="btn  w-sm waves-effect waves-light w-100"
+                          style={{backgroundColor:"#e3242B", color:'white'}}
                           type="submit"
                         >
                           Register
@@ -381,7 +382,7 @@ const PreRegister = props => {
         </ModalBody>
         <ModalFooter>
           
-          <Button style={{"margin":"auto"}}  color="primary" onClick={()=>{
+          <Button style={{"margin":"auto", backgroundColor:"#e3242B", color:'white'}} onClick={()=>{
             
             toggle()
             window.location.reload()}}>
