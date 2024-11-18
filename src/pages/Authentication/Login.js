@@ -124,7 +124,7 @@ const Login = (props) => {
               <Card>
                 <CardBody className="p-4">
                   <div className="text-center mt-2">
-                    <h5 className="text-primary">Welcome</h5>
+                    <h5 className="text">Welcome</h5>
                     <p className="text-muted">Sign in to book an appointment</p>
                   </div>
                   <div className="p-2 mt-4">
@@ -195,7 +195,8 @@ const Login = (props) => {
 
                       <div className="mt-3">
                         <button
-                          className="btn btn-primary w-100 waves-effect waves-light"
+                          className="btn btn w-100 waves-effect waves-light"
+                          style={{backgroundColor:"#e3242B", color:'white'}}
                           type="submit"
                         >
                           Log In
@@ -246,7 +247,7 @@ const Login = (props) => {
                      
 
                       <div className="mt-4 text-center">
-                        <p className="mb-0">Don&apos;t have an account ? <a href="/pre-register" className="fw-medium text-primary"> Book a visit </a> </p>
+                        <p className="mb-0">Don&apos;t have an account ? <a href="/pre-register" className="fw-medium text"> Book a visit </a> </p>
                       </div>
 
                     </Form>
