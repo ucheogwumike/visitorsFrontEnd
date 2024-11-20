@@ -454,7 +454,7 @@ const Visits = () => {
         
 
         {/* Submit Button */}
-        <Button type="submit"  className='w-100' style={{backgroundColor:"#d63229"}}>
+        <Button type="submit"  className='w-100' style={{backgroundColor:"#d63229",borderColor:"#d63229"}}>
           Submit
         </Button>
       </Form>
@@ -463,7 +463,7 @@ const Visits = () => {
                     
                    await exportAsImage(imageurl.current, "test")
                              
-                  }} type="submit"  style={{"width":"25%",height:"30%",margin:"auto","textAlign":"center",backgroundColor:"#d63229"}}>
+                  }} type="submit"  style={{"width":"25%",height:"30%",margin:"auto","textAlign":"center",backgroundColor:"#d63229",borderColor:"#d63229"}}>
           send email
         </Button>
             )

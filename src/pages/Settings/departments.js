@@ -194,7 +194,7 @@ const Departments = (props) => {
                             {department?.floor}
                           </td>
                           <td>
-                            <Button  className='w-100' style={{backgroundColor:"#d63229", color:'white'}} onClick={()=>{
+                            <Button  className='w-100' style={{backgroundColor:"#d63229",borderColor:"#d63229", color:'white'}} onClick={()=>{
                         
                         setDepartment(department)
                         // setEditData(users)
@@ -287,7 +287,7 @@ const Departments = (props) => {
                                 />
                               </FormGroup>
 
-                              <Button type="submit" style={{backgroundColor:"#d63229", color:'white'}} className='w-100'>
+                              <Button type="submit" style={{backgroundColor:"#d63229",borderColor:"#d63229", color:'white'}} className='w-100'>
                                 Submit
                               </Button>
                           </Form>
@@ -370,7 +370,7 @@ const Departments = (props) => {
                                 />
                               </FormGroup>
 
-                              <Button type="submit" style={{backgroundColor:"#d63229", color:'white'}} className='w-100'
+                              <Button type="submit" style={{backgroundColor:"#d63229",borderColor:"#d63229", color:'white'}} className='w-100'
                               onClick={()=>{ toggle2()
                                 //  window.location.reload()
                                       }}

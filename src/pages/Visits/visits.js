@@ -272,7 +272,7 @@ const Visits = () => {
                                 />
                               </FormGroup>
 
-                              <Button type="submit" style={{backgroundColor:"#d63229", color:'white'}} className='w-100'>
+                              <Button type="submit" style={{backgroundColor:"#d63229",borderColor:"#d63229", color:'white'}} className='w-100'>
                                 Submit
                               </Button>
                           </Form>
@@ -353,7 +353,7 @@ const Visits = () => {
                             {users?.department[0]?.name}
                           </td>
                           <td>
-                            <Button  style={{backgroundColor:"#d63229", color:'white'}}  className='w-100' onClick={()=>{
+                            <Button  style={{backgroundColor:"#d63229", borderColor:"#d63229", color:'white'}}  className='w-100' onClick={()=>{
                         // console.log(users)
                         setEditData(users)
                         toggle()
@@ -498,7 +498,7 @@ const Visits = () => {
 
                         <button
                           className="btn  w-sm waves-effect waves-light w-100"
-                          style={{backgroundColor:"#d63229", color:'white'}}
+                          style={{backgroundColor:"#d63229", borderColor:"#d63229", color:'white'}}
                           type="submit"
                           onClick={()=>{
             

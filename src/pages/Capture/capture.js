@@ -205,7 +205,7 @@ const CapturePage = props => {
                     <Webcam   ref={webCamRef} screenshotFormat="image/jpeg" videoConstraints={videoConstraints}/>
                   </div>) }
                   <div className="w-25  d-flex align-items-center mt-2" style={{"justifyContent":"center"}}>
-                  {!imgSrc && (<button className='btn  w-sm waves-effect waves-light' style={{backgroundColor:"#d63229", color:'white'}} onClick={capture}>Capture</button>)}  
+                  {!imgSrc && (<button className='btn  w-sm waves-effect waves-light' style={{backgroundColor:"#d63229", color:'white',borderColor:"#d63229"}} onClick={capture}>Capture</button>)}  
                   </div>
 
 
@@ -369,7 +369,7 @@ const CapturePage = props => {
                       <div className="mt-3 text-end">
                         <button
                           className="btn  w-sm waves-effect waves-light w-100"
-                          style={{backgroundColor:"#d63229", color:'white'}}
+                          style={{backgroundColor:"#d63229", borderColor:"#d63229", color:'white'}}
                           type="submit"
                         >
                           Register
@@ -413,7 +413,7 @@ const CapturePage = props => {
                       <div className="mt-3 text-end">
                         <button
                           className="btn  w-sm waves-effect waves-light w-100"
-                          style={{backgroundColor:"#d63229", color:'white'}}
+                          style={{backgroundColor:"#d63229", borderColor:"#d63229", color:'white'}}
                           type="submit"
                         >
                           Register
@@ -433,7 +433,7 @@ const CapturePage = props => {
           }}>
             Recapture
           </Button>{' '} */}
-        <Button style={{"margin":"auto", backgroundColor:"#d63229", color:'white'}} className='m-2'  onClick={()=>{
+        <Button style={{"margin":"auto", backgroundColor:"#d63229",borderColor:"#d63229", color:'white'}} className='m-2'  onClick={()=>{
           toggle()
           setFirst(true)
           }}>

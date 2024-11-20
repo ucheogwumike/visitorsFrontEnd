@@ -286,7 +286,7 @@ const ReceptionPage = props => {
         </ModalBody>
         <ModalFooter>
          
-          <Button style={{backgroundColor:"#d63229", color:'white'}} onClick={()=>{
+          <Button style={{backgroundColor:"#d63229",borderColor:"#d63229", color:'white'}} onClick={()=>{
             toggle()}}>
             close
           </Button>
