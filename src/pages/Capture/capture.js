@@ -154,6 +154,7 @@ const CapturePage = props => {
     const videoConstraints = {
         width: 350,
         height: 350,
+        deviceId: "default",
         // facingMode: "user"
         facingMode: { exact: "user" }
       };
@@ -201,7 +202,7 @@ const CapturePage = props => {
                     <div className=' d-flex justify-content-center align-items-start ml-2 ' style={{"width":"12.5%"}}>  <img src={imgSrc} alt="webcam" /> </div>
                   
                   ):(<div className=' d-flex justify-content-center align-items-center ml-2' style={{"width":"12.5%"}}>
-                    <Webcam  ref={webCamRef} screenshotFormat="image/jpeg" videoConstraints={videoConstraints}/>
+                    <Webcam   ref={webCamRef} screenshotFormat="image/jpeg" videoConstraints={videoConstraints}/>
                   </div>) }
                   <div className="w-25  d-flex align-items-center mt-2" style={{"justifyContent":"center"}}>
                   {!imgSrc && (<button className='btn  w-sm waves-effect waves-light' style={{backgroundColor:"#d63229", color:'white'}} onClick={capture}>Capture</button>)}  
