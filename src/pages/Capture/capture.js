@@ -155,8 +155,8 @@ const CapturePage = props => {
         width: 350,
         height: 350,
         deviceId: "default",
-        // facingMode: "user"
-        facingMode: { exact: "user" }
+        facingMode: "user"
+        // facingMode: { exact: "user" }
       };
 
       // const selectAccountState = (state) => state.Account;
