@@ -199,7 +199,7 @@ const Departments = (props) => {
                         setDepartment(department)
                         // setEditData(users)
                         toggle2()
-                      }}>Edit</Button>
+                      }}><i class="uil-pen"></i></Button>
                           </td>
                           
                       </tr>

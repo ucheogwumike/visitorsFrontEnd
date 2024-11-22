@@ -166,7 +166,7 @@ const Roles = (props) => {
                         setRoleName(department?.name)
                         newPerm(department?.name)
                         toggle2()
-                      }}>Manage permissions</Button>
+                      }}><i class="uil-pen"></i></Button>
                           </td>
                           
                       </tr>
@@ -221,9 +221,9 @@ const Roles = (props) => {
                         
         </Container>
         <Modal isOpen={modal2} toggle={toggle2}>
-        {/* <ModalHeader className='bg-primary' toggle={toggle}>Edit Visitor</ModalHeader> */}
+        <ModalHeader  toggle={toggle2}>Mange Permissions For {roleName}</ModalHeader>
         <ModalBody>
-          <h3 className='mb-3' style={{"textAlign":"center"}}>Mange Permissions For {roleName}</h3>
+         
 
           
           <Form onSubmit={onCodeSearchRole} className=' text-left p-2'>
@@ -260,7 +260,10 @@ const Roles = (props) => {
 
                 
                               
-                              <Button type="submit" style={{backgroundColor:"#d63229",borderColor:"#d63229", color:'white'}} className='w-100'>
+                              <Button type="submit" style={{backgroundColor:"#d63229",borderColor:"#d63229", color:'white'}} className='w-100' onClick={()=>{
+            toggle2()
+            //window.location.reload()
+            }}>
                                 APPLY
                               </Button>
                           </Form>
@@ -270,14 +273,14 @@ const Roles = (props) => {
 
           
           
-          <Button  style={{backgroundColor:"#d63229",borderColor:"#d63229", color:'white'}} onClick={()=>{
+          {/* <Button  style={{backgroundColor:"#d63229",borderColor:"#d63229", color:'white'}} onClick={()=>{
             
             
             toggle2()
             //window.location.reload()
             }}>
             Close
-          </Button>
+          </Button> */}
 
           
 
